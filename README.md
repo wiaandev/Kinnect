@@ -15,7 +15,7 @@
 <p align="center">
 
   <a href="https://github.com/WiaanDuvenhage-200307/Kinnect">
-    <img src="Images/xplogo.png" width="100px">
+    <img src="Images/Kinnect.svg" width="100px">
   </a>
 
 <h3 align="center">Kinnect</h3>
