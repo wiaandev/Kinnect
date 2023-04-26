@@ -1,10 +1,10 @@
 
 <br />
 
-![GitHub repo size](https://img.shields.io/github/repo-size/WiaanDuvenhage-200307/Kinnect?color=red)
-![GitHub watchers](https://img.shields.io/github/watchers/WiaanDuvenhage-200307/Kinnect?color=red)
-![GitHub language count](https://img.shields.io/github/languages/count/WiaanDuvenhage-200307/Kinnect?color=red)
-![GitHub code size in bytes](https://img.shields.io/github/languages/code-size/WiaanDuvenhage-200307/Kinnect?color=red)
+![GitHub repo size](https://img.shields.io/github/repo-size/WiaanDuvenhage-200307/Kinnect?color=orange)
+![GitHub watchers](https://img.shields.io/github/watchers/WiaanDuvenhage-200307/Kinnect?color=green)
+![GitHub language count](https://img.shields.io/github/languages/count/WiaanDuvenhage-200307/Kinnect?color=white)
+![GitHub code size in bytes](https://img.shields.io/github/languages/code-size/WiaanDuvenhage-200307/Kinnect?color=black)
 [![LinkedIn][linkedin-shield]][linkedin-url]
 [![Instagram][instagram-shield]][instagram-url]
 
