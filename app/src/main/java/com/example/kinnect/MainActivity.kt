@@ -13,6 +13,7 @@ import androidx.compose.ui.text.font.Font
 import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
+import com.example.kinnect.Screens.RegisterScreen
 import com.example.kinnect.ui.theme.KinnectTheme
 import com.example.kinnect.ui.theme.epilogue
 import com.example.kinnect.ui.theme.epilogueBody
@@ -29,7 +30,8 @@ class MainActivity : ComponentActivity() {
                     modifier = Modifier.fillMaxSize(),
                     color = MaterialTheme.colorScheme.background
                 ) {
-                    Greeting("Android")
+//                    Greeting("Android")
+                    RegisterScreen()
                 }
             }
         }
@@ -50,5 +52,6 @@ fun Greeting(name: String, modifier: Modifier = Modifier) {
 fun GreetingPreview() {
     KinnectTheme {
         Greeting("Android")
+
     }
 }
