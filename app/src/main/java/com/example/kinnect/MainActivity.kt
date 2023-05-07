@@ -52,6 +52,5 @@ fun Greeting(name: String, modifier: Modifier = Modifier) {
 fun GreetingPreview() {
     KinnectTheme {
         Greeting("Android")
-
     }
 }
