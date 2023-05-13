@@ -8,33 +8,33 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.sp
 import com.example.kinnect.R
 
-val epilogue = FontFamily(
-        Font(R.font.epilogue_regular),
-        Font(R.font.epilogue_bold, weight = FontWeight.Bold),
+val poppins = FontFamily(
+        Font(R.font.poppins_regular),
+        Font(R.font.poppins_bold, weight = FontWeight.Bold),
 )
 
-val epilogueHeading = TextStyle(
-    fontFamily = epilogue,
+val poppinsHeading = TextStyle(
+    fontFamily = poppins,
     fontWeight = FontWeight.Bold,
     fontSize = 24.sp,
 )
 
-val epilogueH2 = TextStyle(
-    fontFamily = epilogue,
+val poppinsH2 = TextStyle(
+    fontFamily = poppins,
     fontWeight = FontWeight.Bold,
     fontSize = 20.sp,
 )
 
 
-val epilogueH3 = TextStyle(
-    fontFamily = epilogue,
+val poppinsH3 = TextStyle(
+    fontFamily = poppins,
     fontWeight = FontWeight.Normal,
     fontSize = 17.sp,
 )
 
 
-val epilogueBody = TextStyle(
-    fontFamily = epilogue,
+val poppinsBody = TextStyle(
+    fontFamily = poppins,
     fontWeight = FontWeight.Normal,
     fontSize = 14.sp,
 )
@@ -42,7 +42,7 @@ val epilogueBody = TextStyle(
 // Set of Material typography styles to start with
 val Typography = Typography(
     bodyLarge = TextStyle(
-        fontFamily = epilogue,
+        fontFamily = poppins,
         fontWeight = FontWeight.Normal,
         fontSize = 16.sp,
         lineHeight = 24.sp,

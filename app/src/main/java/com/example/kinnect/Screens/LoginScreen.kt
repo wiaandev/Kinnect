@@ -57,10 +57,10 @@ import com.example.kinnect.ui.theme.poppinsHeading
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun RegisterScreen(
+fun LoginScreen(
     modifier:Modifier = Modifier,
     hasError: Boolean = false,
-    onNavigateToLogin:() -> Unit
+    onNavigateToRegister:() -> Unit
 ){
 
     val focusManager = LocalFocusManager.current
@@ -69,19 +69,11 @@ fun RegisterScreen(
     }
 
     //    State Variables
-    var firstName by remember {
-        mutableStateOf("")
-    }
-    var lastName by remember {
-        mutableStateOf("")
-    }
+
     var email by remember {
         mutableStateOf("")
     }
     var password by remember {
-        mutableStateOf("")
-    }
-    var confirmPassword by remember {
         mutableStateOf("")
     }
 
@@ -96,44 +88,11 @@ fun RegisterScreen(
             .verticalScroll(state = scrollState), horizontalAlignment = Alignment.CenterHorizontally) {
             Image(painter = painterResource(id = R.drawable.kinnect_dark), contentDescription = null, modifier = Modifier.size(200.dp))
             Row(modifier = Modifier.fillMaxWidth()) {
-                Text(text = "Create Your Account", style = poppinsHeading, color = K_Charcoal)
+                Text(text = "Welcome Back", style = poppinsHeading, color = K_Charcoal)
             }
 
             Spacer(modifier = Modifier.size(30.dp))
 
-            Row(modifier = Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.Start) {
-
-                OutlinedTextField(
-                    value = firstName,
-                    onValueChange = {firstName = it},
-                    label = { Text(text = "First Name")},
-                    modifier = Modifier
-                        .width(170.dp)
-                        .padding(5.dp), shape = RoundedCornerShape(10.dp),
-                    colors = TextFieldDefaults.outlinedTextFieldColors(
-                        focusedBorderColor = K_Orange,
-                        unfocusedBorderColor = K_Orange,
-                        textColor = K_Charcoal
-                    )
-                )
-
-                Spacer(modifier = Modifier.size(10.dp))
-
-                OutlinedTextField(
-                    value = lastName,
-                    onValueChange = {lastName = it},
-                    label = { Text(text = "Last Name")},
-                    modifier = Modifier
-                        .width(170.dp)
-                        .padding(5.dp), shape = RoundedCornerShape(10.dp),
-                    colors = TextFieldDefaults.outlinedTextFieldColors(
-                        focusedBorderColor = K_Orange,
-                        unfocusedBorderColor = K_Orange,
-                        textColor = K_Charcoal
-                    ),
-                    keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Text)
-                )
-            }
 
             Row(modifier = Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.Start) {
 
@@ -194,49 +153,11 @@ fun RegisterScreen(
                 Spacer(modifier = Modifier.height(8.dp))
             }
 
-            Row(modifier = Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.Start) {
-
-                OutlinedTextField(
-                    value = confirmPassword,
-                    onValueChange = {confirmPassword = it},
-                    label = { Text(text = "Confirm Password")},
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .padding(5.dp), shape = RoundedCornerShape(10.dp),
-                    colors = TextFieldDefaults.outlinedTextFieldColors(
-                        focusedBorderColor = K_Orange,
-                        unfocusedBorderColor = K_Orange,
-                        textColor = K_Charcoal
-                    ),
-                    keyboardOptions = KeyboardOptions.Default.copy(keyboardType = KeyboardType.Text, autoCorrect = true, imeAction = ImeAction.Done),
-                    keyboardActions = KeyboardActions (
-                        onDone = {
-                            focusManager.clearFocus()
-                        }
-                    ),
-                    singleLine = true,
-                    isError = hasError,
-                    visualTransformation = if(showPassword.value) VisualTransformation.None else PasswordVisualTransformation(),
-                    trailingIcon = {
-                        val (icon, iconColor) = if(showPassword.value){
-                            Pair(
-                                Icons.Outlined.Visibility,
-                                colorResource(id = R.color.charcoal)
-                            )
-                        } else {
-                            Pair(Icons.Outlined.VisibilityOff, colorResource(id = R.color.charcoal))
-                        }
-                        IconButton(onClick = {showPassword.value = !showPassword.value}) {
-                            Icon(icon, contentDescription = null, tint= iconColor)
-                        }
-                    }
-                )
-            }
 
             Spacer(modifier = Modifier.size(30.dp))
 
             Button(onClick = { /*TODO*/ }, modifier = Modifier.fillMaxWidth(), colors = ButtonDefaults.buttonColors(containerColor = K_Orange, K_White), shape = RoundedCornerShape(10.dp)) {
-                Text(text = "Sign Up",
+                Text(text = "Login",
                     style = poppinsH3,
                     modifier = Modifier
                         .padding(10.dp))
@@ -245,10 +166,24 @@ fun RegisterScreen(
             Spacer(modifier = Modifier.size(30.dp))
 
             Row(modifier = Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.Center, verticalAlignment = Alignment.CenterVertically) {
-                Text(text = "Already part of Kinnect?", style = poppinsBody, color = K_Charcoal)
-                Button(onClick = { onNavigateToLogin.invoke() }, colors = ButtonDefaults.buttonColors(containerColor = K_White, K_Orange)) {
-                    Text(text = "Login Here", style = poppinsBody)
+                Text(text = "New to Kinnect?", style = poppinsBody, color = K_Charcoal)
+                Button(onClick = { onNavigateToRegister.invoke() }, colors = ButtonDefaults.buttonColors(containerColor = K_White, K_Orange)) {
+                    Text(text = "Create Your Account", style = poppinsBody)
                 }
+            }
+
+            Text(text = "or")
+
+            Spacer(modifier = Modifier.size(10.dp))
+
+            Button(onClick = { /*TODO*/ }, modifier = Modifier.width(250.dp), colors = ButtonDefaults.buttonColors(containerColor = K_Charcoal, K_White), shape = RoundedCornerShape(10.dp)) {
+                Image(
+                    painterResource(R.drawable.google),
+                    contentDescription = null,
+                    modifier = Modifier.width(15.dp)
+                )
+                Spacer(modifier = Modifier.width(10.dp))
+                Text(text = "Continue with Google")
             }
 
 
@@ -260,8 +195,8 @@ fun RegisterScreen(
 
 @Preview(showSystemUi = true)
 @Composable
-fun PreviewRegisterScreen(){
+fun PreviewLoginScreen(){
     KinnectTheme() {
-        RegisterScreen(onNavigateToLogin = {})
+        LoginScreen(onNavigateToRegister = {})
     }
 }
