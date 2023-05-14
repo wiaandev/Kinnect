@@ -6,6 +6,7 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import com.example.androidclassroom.screens.ConversationsScreen
+import com.example.kinnect.Screens.HouseholdCreateScreen
 import com.example.kinnect.Screens.LoginScreen
 import com.example.kinnect.Screens.RegisterScreen
 
@@ -17,7 +18,8 @@ enum class AuthRoutes {
 enum class HomeRoutes {
     Conversations,
     Chat,
-    Profile
+    Profile,
+    Household
 
 }
 
@@ -57,10 +59,28 @@ fun Navigation(
             )
         }
 
+//        composable(route = HomeRoutes.Conversations.name){
+//            ConversationsScreen(onSignOut = {navController.navigate(AuthRoutes.Login.name){
+//                launchSingleTop = true
+//                popUpTo(route = AuthRoutes.Login.name){
+//                    inclusive = true
+//                }
+//            } })
+//        }
+
         composable(route = HomeRoutes.Conversations.name){
-            ConversationsScreen(onSignOut = {navController.navigate(AuthRoutes.Login.name){
+            ConversationsScreen(onNavigateHousehold = {navController.navigate(HomeRoutes.Household.name){
                 launchSingleTop = true
-                popUpTo(route = AuthRoutes.Login.name){
+                popUpTo(route = HomeRoutes.Household.name){
+                    inclusive = true
+                }
+            } })
+        }
+
+        composable(route = HomeRoutes.Household.name){
+            HouseholdCreateScreen(onNavigateToConversation = {navController.navigate(HomeRoutes.Conversations.name){
+                launchSingleTop = true
+                popUpTo(route = HomeRoutes.Conversations.name){
                     inclusive = true
                 }
             } })

@@ -25,7 +25,7 @@ import com.example.kinnect.R
 import com.example.kinnect.ui.theme.KinnectTheme
 
 @Composable
-fun ConversationsScreen(modifier: Modifier = Modifier, onSignOut: () -> Unit){
+fun ConversationsScreen(modifier: Modifier = Modifier, onNavigateHousehold: () -> Unit){
     Column(
         horizontalAlignment = Alignment.CenterHorizontally,
         modifier = Modifier.padding(20.dp)
@@ -35,7 +35,11 @@ fun ConversationsScreen(modifier: Modifier = Modifier, onSignOut: () -> Unit){
             fontSize = 24.sp,
             fontWeight = FontWeight.Bold
         )
-        Button(onClick = { onSignOut.invoke()}) {
+//        Button(onClick = { onSignOut.invoke()}) {
+//            Text(text = "Sign Out")
+//        }
+
+        Button(onClick = { onNavigateHousehold.invoke()}) {
             Text(text = "Sign Out")
         }
 
@@ -80,6 +84,7 @@ fun ConversationCard(modifier: Modifier = Modifier){
                 modifier = Modifier.padding(16.dp),
                 style = MaterialTheme.typography.headlineSmall
             )
+
         }
     }
 }
@@ -88,6 +93,6 @@ fun ConversationCard(modifier: Modifier = Modifier){
 @Composable
 fun prevConversationsScreen(){
     KinnectTheme() {
-        ConversationsScreen(onSignOut = {})
+        ConversationsScreen( onNavigateHousehold = {})
     }
 }
