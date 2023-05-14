@@ -1,5 +1,6 @@
 package com.example.kinnect.Screens
 
+import android.util.Log
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
@@ -47,7 +48,6 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.example.kinnect.R
 import com.example.kinnect.ui.theme.K_Charcoal
-import com.example.kinnect.ui.theme.K_CharcoalLight
 import com.example.kinnect.ui.theme.K_Orange
 import com.example.kinnect.ui.theme.K_White
 import com.example.kinnect.ui.theme.KinnectTheme
@@ -235,7 +235,7 @@ fun RegisterScreen(
 
             Spacer(modifier = Modifier.size(30.dp))
 
-            Button(onClick = { /*TODO*/ }, modifier = Modifier.fillMaxWidth(), colors = ButtonDefaults.buttonColors(containerColor = K_Orange, K_White), shape = RoundedCornerShape(10.dp)) {
+            Button(onClick = { Log.d("variable", email) }, modifier = Modifier.fillMaxWidth(), colors = ButtonDefaults.buttonColors(containerColor = K_Orange, K_White), shape = RoundedCornerShape(10.dp)) {
                 Text(text = "Sign Up",
                     style = poppinsH3,
                     modifier = Modifier

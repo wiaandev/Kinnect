@@ -1,5 +1,6 @@
 package com.example.kinnect.Screens
 
+import android.util.Log
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
@@ -113,8 +114,8 @@ fun HouseholdCreateScreen(onNavigateToConversation: () -> Unit){
             }
             Spacer(modifier = Modifier.size(30.dp))
             Row() {
-                Button(onClick = { /*TODO*/ }, modifier = Modifier.fillMaxWidth(), colors = ButtonDefaults.buttonColors(containerColor = K_Orange, K_White), shape = RoundedCornerShape(10.dp)) {
-                    Text(text = "Login",
+                Button(onClick = { /*TODO*/  }, modifier = Modifier.fillMaxWidth(), colors = ButtonDefaults.buttonColors(containerColor = K_Orange, K_White), shape = RoundedCornerShape(10.dp)) {
+                    Text(text = "Create",
                         style = poppinsH3,
                         modifier = Modifier
                             .padding(10.dp))

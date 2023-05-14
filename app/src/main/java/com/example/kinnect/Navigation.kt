@@ -69,9 +69,9 @@ fun Navigation(
 //        }
 
         composable(route = HomeRoutes.Conversations.name){
-            ConversationsScreen(onNavigateHousehold = {navController.navigate(HomeRoutes.Household.name){
+            ConversationsScreen(onNavigateHousehold = {navController.navigate(AuthRoutes.Register.name){
                 launchSingleTop = true
-                popUpTo(route = HomeRoutes.Household.name){
+                popUpTo(route = AuthRoutes.Register.name){
                     inclusive = true
                 }
             } })
