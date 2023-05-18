@@ -87,7 +87,6 @@ fun RegisterScreen(
 
     val scrollState = rememberScrollState()
 
-
     Column(modifier = Modifier
         .fillMaxSize()
         .background(K_White)) {
