@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "108588781721",
+    "project_id": "kinnect-387b3",
+    "storage_bucket": "kinnect-387b3.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:108588781721:android:fc4426193603bd18e2a808",
+        "android_client_info": {
+          "package_name": "com.example.kinnect"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "108588781721-psdlcocvpmkm2bsh4pgdra4vj755psd7.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDpgfH7MefeOBJt5kzr-uJsOlhvFke-aK8"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "108588781721-psdlcocvpmkm2bsh4pgdra4vj755psd7.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

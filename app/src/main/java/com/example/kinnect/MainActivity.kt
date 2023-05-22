@@ -13,7 +13,9 @@ import androidx.compose.ui.text.font.Font
 import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.lifecycle.viewmodel.compose.viewModel
 import com.example.androidclassroom.Navigation
+import com.example.androidclassroom.viewModels.AuthViewModel
 import com.example.kinnect.Screens.LoginScreen
 import com.example.kinnect.Screens.RegisterScreen
 import com.example.kinnect.ui.theme.KinnectTheme
@@ -23,6 +25,9 @@ class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContent {
+
+            val authViewModel: AuthViewModel = viewModel(modelClass = AuthViewModel::class.java)
+
             KinnectTheme {
                 // A surface container using the 'background' color from the theme
                 Surface(
@@ -31,7 +36,7 @@ class MainActivity : ComponentActivity() {
                 ) {
 //                    Greeting("Android")
 //                    RegisterScreen()
-                    Navigation()
+                    Navigation(authViewModel = authViewModel)
                 }
             }
         }

@@ -36,6 +36,8 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalFocusManager
 import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.painterResource
@@ -45,9 +47,9 @@ import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.text.input.VisualTransformation
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import com.example.androidclassroom.viewModels.AuthViewModel
 import com.example.kinnect.R
 import com.example.kinnect.ui.theme.K_Charcoal
-import com.example.kinnect.ui.theme.K_CharcoalLight
 import com.example.kinnect.ui.theme.K_Orange
 import com.example.kinnect.ui.theme.K_White
 import com.example.kinnect.ui.theme.KinnectTheme
@@ -60,13 +62,19 @@ import com.example.kinnect.ui.theme.poppinsHeading
 fun LoginScreen(
     modifier:Modifier = Modifier,
     hasError: Boolean = false,
-    onNavigateToRegister:() -> Unit
+    onNavigateToRegister:() -> Unit,
+    authViewModel: AuthViewModel? = null
 ){
 
     val focusManager = LocalFocusManager.current
     val showPassword = remember {
         mutableStateOf(false)
     }
+
+    //get our values from viewmodel
+    val authUiState = authViewModel?.authUiState
+    val error = authUiState?.errorMessage != null
+    val context = LocalContext.current
 
     //    State Variables
 
@@ -97,8 +105,8 @@ fun LoginScreen(
             Row(modifier = Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.Start) {
 
                 OutlinedTextField(
-                    value = email,
-                    onValueChange = {email = it},
+                    value = authUiState?.loginEmail ?: "",
+                    onValueChange = {authViewModel?.handleInputChange("loginEmail", it)},
                     label = { Text(text = "Email")},
                     modifier = Modifier
                         .fillMaxWidth()
@@ -115,8 +123,8 @@ fun LoginScreen(
             Row(modifier = Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.Start) {
 
                 OutlinedTextField(
-                    value = password,
-                    onValueChange = { password = it },
+                    value = authUiState?.loginPassword ?: "",
+                    onValueChange = {authViewModel?.handleInputChange("loginPassword", it)},
                     label = { Text(text = "Password") },
                     modifier = Modifier
                         .fillMaxWidth()
@@ -153,10 +161,18 @@ fun LoginScreen(
                 Spacer(modifier = Modifier.height(8.dp))
             }
 
+            if(error){
+                Text(text = authUiState?.errorMessage.toString(), color = Color.Red)
+            }
+
 
             Spacer(modifier = Modifier.size(30.dp))
 
-            Button(onClick = { /*TODO*/ }, modifier = Modifier.fillMaxWidth(), colors = ButtonDefaults.buttonColors(containerColor = K_Orange, K_White), shape = RoundedCornerShape(10.dp)) {
+            Button(
+                onClick = { authViewModel?.loginUser(context) },
+                modifier = Modifier.fillMaxWidth(),
+                colors = ButtonDefaults.buttonColors(containerColor = K_Orange, K_White),
+                shape = RoundedCornerShape(10.dp)) {
                 Text(text = "Login",
                     style = poppinsH3,
                     modifier = Modifier

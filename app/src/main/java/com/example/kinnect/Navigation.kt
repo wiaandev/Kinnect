@@ -6,6 +6,7 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import com.example.androidclassroom.screens.ConversationsScreen
+import com.example.androidclassroom.viewModels.AuthViewModel
 import com.example.kinnect.Screens.HouseholdCreateScreen
 import com.example.kinnect.Screens.LoginScreen
 import com.example.kinnect.Screens.RegisterScreen
@@ -26,12 +27,20 @@ enum class HomeRoutes {
 // Generating our navigation Navhost
 @Composable
 fun Navigation(
-    navController: NavHostController = rememberNavController()
+    navController: NavHostController = rememberNavController(),
+    authViewModel: AuthViewModel,
 ){
+
+    val startingScreen =
+        if(authViewModel.hasUser){
+            HomeRoutes.Conversations.name
+        } else {
+            AuthRoutes.Login.name
+        }
 //  Identifying our navHost and that it should use my navController
     NavHost(
         navController = navController,
-        startDestination = HomeRoutes.Conversations.name){
+        startDestination = startingScreen){
 
         //define all the screens I can navigate to
 
@@ -44,7 +53,7 @@ fun Navigation(
                         inclusive = true
                     }
                 }
-                })
+                }, authViewModel = authViewModel)
         }
 
         // my Register screen
