@@ -14,8 +14,9 @@ import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.lifecycle.viewmodel.compose.viewModel
-import com.example.androidclassroom.Navigation
-import com.example.androidclassroom.viewModels.AuthViewModel
+import com.example.kinnect.Navigation
+import com.example.kinnect.Screens.ConversationsScreen
+import com.example.kinnect.viewModels.AuthViewModel
 import com.example.kinnect.Screens.LoginScreen
 import com.example.kinnect.Screens.RegisterScreen
 import com.example.kinnect.ui.theme.KinnectTheme

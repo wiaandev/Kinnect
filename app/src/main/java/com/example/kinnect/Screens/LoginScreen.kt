@@ -25,6 +25,7 @@ import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextFieldDefaults
@@ -47,7 +48,7 @@ import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.text.input.VisualTransformation
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import com.example.androidclassroom.viewModels.AuthViewModel
+import com.example.kinnect.viewModels.AuthViewModel
 import com.example.kinnect.R
 import com.example.kinnect.ui.theme.K_Charcoal
 import com.example.kinnect.ui.theme.K_Orange
@@ -90,13 +91,13 @@ fun LoginScreen(
 
     Column(modifier = Modifier
         .fillMaxSize()
-        .background(K_White)) {
+        .background(MaterialTheme.colorScheme.background)) {
         Column(modifier = Modifier
             .padding(20.dp)
             .verticalScroll(state = scrollState), horizontalAlignment = Alignment.CenterHorizontally) {
             Image(painter = painterResource(id = R.drawable.kinnect_dark), contentDescription = null, modifier = Modifier.size(200.dp))
             Row(modifier = Modifier.fillMaxWidth()) {
-                Text(text = "Welcome Back", style = poppinsHeading, color = K_Charcoal)
+                Text(text = "Welcome Back", style = poppinsHeading, color = MaterialTheme.colorScheme.tertiary)
             }
 
             Spacer(modifier = Modifier.size(30.dp))
@@ -114,7 +115,7 @@ fun LoginScreen(
                     colors = TextFieldDefaults.outlinedTextFieldColors(
                         focusedBorderColor = K_Orange,
                         unfocusedBorderColor = K_Orange,
-                        textColor = K_Charcoal
+                        textColor = MaterialTheme.colorScheme.tertiary
                     ),
                     keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Email)
                 )
@@ -133,7 +134,7 @@ fun LoginScreen(
                         focusedBorderColor = K_Orange,
                         unfocusedBorderColor = K_Orange,
                         focusedLabelColor = K_Orange,
-                        textColor = K_Charcoal
+                        textColor = MaterialTheme.colorScheme.tertiary
                     ),
                     keyboardOptions = KeyboardOptions.Default.copy(keyboardType = KeyboardType.Text, autoCorrect = true, imeAction = ImeAction.Done),
                     keyboardActions = KeyboardActions (
@@ -182,7 +183,7 @@ fun LoginScreen(
             Spacer(modifier = Modifier.size(30.dp))
 
             Row(modifier = Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.Center, verticalAlignment = Alignment.CenterVertically) {
-                Text(text = "New to Kinnect?", style = poppinsBody, color = K_Charcoal)
+                Text(text = "New to Kinnect?", style = poppinsBody, color = MaterialTheme.colorScheme.tertiary)
                 Button(onClick = { onNavigateToRegister.invoke() }, colors = ButtonDefaults.buttonColors(containerColor = K_White, K_Orange)) {
                     Text(text = "Create Your Account", style = poppinsBody)
                 }
@@ -192,7 +193,7 @@ fun LoginScreen(
 
             Spacer(modifier = Modifier.size(10.dp))
 
-            Button(onClick = { /*TODO*/ }, modifier = Modifier.width(250.dp), colors = ButtonDefaults.buttonColors(containerColor = K_Charcoal, K_White), shape = RoundedCornerShape(10.dp)) {
+            Button(onClick = { /*TODO*/ }, modifier = Modifier.width(250.dp), colors = ButtonDefaults.buttonColors(containerColor = MaterialTheme.colorScheme.onBackground, MaterialTheme.colorScheme.background), shape = RoundedCornerShape(10.dp)) {
                 Image(
                     painterResource(R.drawable.google),
                     contentDescription = null,

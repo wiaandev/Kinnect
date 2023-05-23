@@ -1,4 +1,4 @@
-package com.example.androidclassroom.viewModels
+package com.example.kinnect.viewModels
 
 import android.content.Context
 import android.util.Log
@@ -8,7 +8,7 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.example.androidclassroom.repositories.AuthRepository
+import com.example.kinnect.repositories.AuthRepository
 import kotlinx.coroutines.launch
 
 class AuthViewModel (

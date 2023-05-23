@@ -1,12 +1,12 @@
-package com.example.androidclassroom
+package com.example.kinnect
 
 import androidx.compose.runtime.Composable
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
-import com.example.androidclassroom.screens.ConversationsScreen
-import com.example.androidclassroom.viewModels.AuthViewModel
+import com.example.kinnect.Screens.ConversationsScreen
+import com.example.kinnect.viewModels.AuthViewModel
 import com.example.kinnect.Screens.HouseholdCreateScreen
 import com.example.kinnect.Screens.LoginScreen
 import com.example.kinnect.Screens.RegisterScreen
@@ -31,12 +31,12 @@ fun Navigation(
     authViewModel: AuthViewModel,
 ){
 
-    val startingScreen =
-        if(authViewModel.hasUser){
-            HomeRoutes.Conversations.name
-        } else {
-            AuthRoutes.Login.name
-        }
+    val startingScreen = HomeRoutes.Conversations.name
+//        if(authViewModel.hasUser){
+//            HomeRoutes.Conversations.name
+//        } else {
+//            AuthRoutes.Login.name
+//        }
 //  Identifying our navHost and that it should use my navController
     NavHost(
         navController = navController,
