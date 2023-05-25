@@ -31,12 +31,12 @@ fun Navigation(
     authViewModel: AuthViewModel,
 ){
 
-    val startingScreen = HomeRoutes.Conversations.name
-//        if(authViewModel.hasUser){
-//            HomeRoutes.Conversations.name
-//        } else {
-//            AuthRoutes.Login.name
-//        }
+    val startingScreen = if(authViewModel.hasUser){
+            HomeRoutes.Conversations.name
+        } else {
+            AuthRoutes.Login.name
+        }
+
 //  Identifying our navHost and that it should use my navController
     NavHost(
         navController = navController,
@@ -64,7 +64,7 @@ fun Navigation(
                     popUpTo(route = AuthRoutes.Register.name){
                         inclusive = true
                     }
-                }}
+                }}, authViewModel = AuthViewModel()
             )
         }
 
@@ -83,7 +83,7 @@ fun Navigation(
                 popUpTo(route = AuthRoutes.Register.name){
                     inclusive = true
                 }
-            } })
+            } }, authViewModel = AuthViewModel())
         }
 
         composable(route = HomeRoutes.Household.name){

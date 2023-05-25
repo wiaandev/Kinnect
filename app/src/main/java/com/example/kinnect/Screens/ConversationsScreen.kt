@@ -12,6 +12,7 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material3.Button
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.LinearProgressIndicator
 import androidx.compose.material3.MaterialTheme
@@ -23,6 +24,7 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
@@ -37,10 +39,16 @@ import com.example.kinnect.ui.theme.K_White
 import com.example.kinnect.ui.theme.KinnectTheme
 import com.example.kinnect.ui.theme.poppinsBody
 import com.example.kinnect.ui.theme.poppinsHeading
+import com.example.kinnect.viewModels.AuthViewModel
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun ConversationsScreen(modifier: Modifier = Modifier, onNavigateHousehold: () -> Unit){
+fun ConversationsScreen(modifier: Modifier = Modifier, onNavigateHousehold: () -> Unit, authViewModel: AuthViewModel){
+
+    val authUiState = authViewModel?.authUiState
+    val error = authUiState?.errorMessage != null
+    val context = LocalContext.current
+
     Column(
         horizontalAlignment = Alignment.CenterHorizontally,
         modifier = Modifier.padding(20.dp)
@@ -129,6 +137,9 @@ fun ConversationsScreen(modifier: Modifier = Modifier, onNavigateHousehold: () -
         
         Spacer(modifier = Modifier.size(20.dp))
 
+        Button(onClick = { authViewModel?.logoutUser(context = context)}) {
+            Text(text = "Logout", style = poppinsBody, color = MaterialTheme.colorScheme.tertiary)
+        }
 
         LazyColumn(){
             items(7){item ->
@@ -175,8 +186,8 @@ fun ConversationsScreen(modifier: Modifier = Modifier, onNavigateHousehold: () -
 
 @Preview(showSystemUi = true)
 @Composable
-fun prevConversationsScreen(){
+fun PreviewConversationsScreen(){
     KinnectTheme() {
-        ConversationsScreen( onNavigateHousehold = {})
+        ConversationsScreen( onNavigateHousehold = {}, authViewModel = AuthViewModel())
     }
 }

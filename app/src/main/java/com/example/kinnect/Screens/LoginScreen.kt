@@ -64,8 +64,10 @@ fun LoginScreen(
     modifier:Modifier = Modifier,
     hasError: Boolean = false,
     onNavigateToRegister:() -> Unit,
-    authViewModel: AuthViewModel? = null
+    authViewModel: AuthViewModel
 ){
+
+
 
     val focusManager = LocalFocusManager.current
     val showPassword = remember {
@@ -91,13 +93,13 @@ fun LoginScreen(
 
     Column(modifier = Modifier
         .fillMaxSize()
-        .background(MaterialTheme.colorScheme.background)) {
+        .background(K_White)) {
         Column(modifier = Modifier
             .padding(20.dp)
             .verticalScroll(state = scrollState), horizontalAlignment = Alignment.CenterHorizontally) {
             Image(painter = painterResource(id = R.drawable.kinnect_dark), contentDescription = null, modifier = Modifier.size(200.dp))
             Row(modifier = Modifier.fillMaxWidth()) {
-                Text(text = "Welcome Back", style = poppinsHeading, color = MaterialTheme.colorScheme.tertiary)
+                Text(text = "Welcome Back", style = poppinsHeading, color = K_Charcoal)
             }
 
             Spacer(modifier = Modifier.size(30.dp))
@@ -107,7 +109,7 @@ fun LoginScreen(
 
                 OutlinedTextField(
                     value = authUiState?.loginEmail ?: "",
-                    onValueChange = {authViewModel?.handleInputChange("loginEmail", it)},
+                    onValueChange = {authViewModel.handleInputChange("loginEmail", it)},
                     label = { Text(text = "Email")},
                     modifier = Modifier
                         .fillMaxWidth()
@@ -115,7 +117,7 @@ fun LoginScreen(
                     colors = TextFieldDefaults.outlinedTextFieldColors(
                         focusedBorderColor = K_Orange,
                         unfocusedBorderColor = K_Orange,
-                        textColor = MaterialTheme.colorScheme.tertiary
+                        textColor = K_Charcoal
                     ),
                     keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Email)
                 )
@@ -125,7 +127,7 @@ fun LoginScreen(
 
                 OutlinedTextField(
                     value = authUiState?.loginPassword ?: "",
-                    onValueChange = {authViewModel?.handleInputChange("loginPassword", it)},
+                    onValueChange = {authViewModel.handleInputChange("loginPassword", it)},
                     label = { Text(text = "Password") },
                     modifier = Modifier
                         .fillMaxWidth()
@@ -134,7 +136,7 @@ fun LoginScreen(
                         focusedBorderColor = K_Orange,
                         unfocusedBorderColor = K_Orange,
                         focusedLabelColor = K_Orange,
-                        textColor = MaterialTheme.colorScheme.tertiary
+                        textColor = K_Charcoal
                     ),
                     keyboardOptions = KeyboardOptions.Default.copy(keyboardType = KeyboardType.Text, autoCorrect = true, imeAction = ImeAction.Done),
                     keyboardActions = KeyboardActions (
@@ -183,17 +185,16 @@ fun LoginScreen(
             Spacer(modifier = Modifier.size(30.dp))
 
             Row(modifier = Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.Center, verticalAlignment = Alignment.CenterVertically) {
-                Text(text = "New to Kinnect?", style = poppinsBody, color = MaterialTheme.colorScheme.tertiary)
+                Text(text = "New to Kinnect?", style = poppinsBody, color = K_Charcoal)
                 Button(onClick = { onNavigateToRegister.invoke() }, colors = ButtonDefaults.buttonColors(containerColor = K_White, K_Orange)) {
                     Text(text = "Create Your Account", style = poppinsBody)
                 }
             }
 
-            Text(text = "or")
 
             Spacer(modifier = Modifier.size(10.dp))
 
-            Button(onClick = { /*TODO*/ }, modifier = Modifier.width(250.dp), colors = ButtonDefaults.buttonColors(containerColor = MaterialTheme.colorScheme.onBackground, MaterialTheme.colorScheme.background), shape = RoundedCornerShape(10.dp)) {
+            Button(onClick = { /*TODO*/ }, modifier = Modifier.width(250.dp), colors = ButtonDefaults.buttonColors(containerColor = K_Charcoal, K_White), shape = RoundedCornerShape(10.dp)) {
                 Image(
                     painterResource(R.drawable.google),
                     contentDescription = null,
@@ -214,6 +215,6 @@ fun LoginScreen(
 @Composable
 fun PreviewLoginScreen(){
     KinnectTheme() {
-        LoginScreen(onNavigateToRegister = {})
+        LoginScreen(onNavigateToRegister = {}, authViewModel = AuthViewModel())
     }
 }

@@ -25,9 +25,11 @@ class AuthViewModel (
         authUiState = when (target) {
             "loginEmail" -> authUiState.copy(loginEmail = value)
             "loginPassword" -> authUiState.copy(loginPassword = value)
-            "registerUsername" -> authUiState.copy(registerUsername = value)
+            "registerFirstName" -> authUiState.copy(registerFirstName = value)
+            "registerLastName" -> authUiState.copy(registerLastName = value)
             "registerEmail" -> authUiState.copy(registerEmail = value)
             "registerPassword" -> authUiState.copy(registerPassword = value)
+            "registerConfirmPassword" -> authUiState.copy(registerConfirmPassword = value)
             else -> authUiState
         }
     }
@@ -36,8 +38,8 @@ class AuthViewModel (
     fun createNewUser(context: Context) = viewModelScope.launch {
         try {
             //for validation
-            if(authUiState.registerUsername.isBlank() || authUiState.registerEmail.isBlank() || authUiState.registerPassword.isBlank()){
-                authUiState = authUiState.copy(errorMessage = "Please fill in your username, email & password")
+            if(authUiState.registerFirstName.isBlank() || authUiState.registerLastName.isBlank() || authUiState.registerEmail.isBlank() || authUiState.registerPassword.isBlank() || authUiState.registerConfirmPassword.isBlank()){
+                authUiState = authUiState.copy(errorMessage = "Please fill in the fields")
             } else{
                 authUiState = authUiState.copy(isLoading = true) // start loading functionality
 
@@ -49,7 +51,7 @@ class AuthViewModel (
 
                     if(userId.isNotBlank()){ // we get a userId back
                         //success
-                        Log.d("Register Succes: ", userId)
+                        Log.d("Register Success: ", userId)
 
                         Toast.makeText(context, "Registration Completed", Toast.LENGTH_SHORT).show()
 
@@ -113,6 +115,10 @@ class AuthViewModel (
             authUiState = authUiState.copy(isLoading = false)
         }
     }
+
+    fun logoutUser(context: Context) = viewModelScope.launch {
+        repository.signOutUser()
+    }
 }
 
 // These values are for my front-end state management
@@ -127,8 +133,10 @@ data class AuthUiState(
     val loginPassword: String = "",
 
     //state values for my register
-    val registerUsername: String = "",
+    val registerFirstName: String = "",
+    val registerLastName: String = "",
     val registerEmail: String = "",
     val registerPassword: String = "",
+    val registerConfirmPassword: String = ""
 
     )

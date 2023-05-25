@@ -1,5 +1,6 @@
 package com.example.kinnect.ui.theme
 
+import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
 
 val K_Orange = Color(0xFFF96042)
@@ -12,3 +13,10 @@ val K_CharcoalLight = Color(0xFF434D59)
 
 val K_White = Color(0xFFF7F8FD)
 val K_WhiteDark = Color(0xFFE5E6EB)
+
+val gradient = Brush.horizontalGradient(
+    0.0f to K_Orange,
+    1.0f to K_OrangeLight,
+    startX = -1000.0f,
+    endX = 1000.0f
+)
