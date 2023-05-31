@@ -9,6 +9,7 @@ import com.example.kinnect.Screens.ConversationsScreen
 import com.example.kinnect.viewModels.AuthViewModel
 import com.example.kinnect.Screens.HouseholdCreateScreen
 import com.example.kinnect.Screens.LoginScreen
+import com.example.kinnect.Screens.ProfileScreen
 import com.example.kinnect.Screens.RegisterScreen
 
 enum class AuthRoutes {
@@ -53,7 +54,15 @@ fun Navigation(
                         inclusive = true
                     }
                 }
-                }, authViewModel = authViewModel)
+                }, authViewModel = authViewModel,
+            onNavToConversations = {
+                navController.navigate(HomeRoutes.Conversations.name){
+                    launchSingleTop = true
+                    popUpTo(route = AuthRoutes.Login.name){
+                        inclusive = true
+                    }
+                }
+            })
         }
 
         // my Register screen
@@ -64,7 +73,15 @@ fun Navigation(
                     popUpTo(route = AuthRoutes.Register.name){
                         inclusive = true
                     }
-                }}, authViewModel = AuthViewModel()
+                }}, authViewModel = AuthViewModel(),
+                onNavigateToConversations = {
+                    navController.navigate(HomeRoutes.Conversations.name){
+                        launchSingleTop = true
+                        popUpTo(route = AuthRoutes.Register.name){
+                            inclusive = true
+                        }
+                    }
+                }
             )
         }
 
@@ -83,7 +100,13 @@ fun Navigation(
                 popUpTo(route = AuthRoutes.Register.name){
                     inclusive = true
                 }
-            } }, authViewModel = AuthViewModel())
+            } }, authViewModel = AuthViewModel(),
+                onNavToProfile = {navController.navigate(HomeRoutes.Profile.name){
+                    launchSingleTop = true
+                    popUpTo(route = HomeRoutes.Conversations.name){
+                        inclusive = true
+                    }
+                } })
         }
 
         composable(route = HomeRoutes.Household.name){
@@ -93,6 +116,20 @@ fun Navigation(
                     inclusive = true
                 }
             } })
+        }
+
+        composable(route = HomeRoutes.Profile.name){
+            ProfileScreen(
+                navOnSignOut = { navController.navigate(AuthRoutes.Login.name) {
+                    launchSingleTop = true
+                    popUpTo(route = HomeRoutes.Profile.name){
+                        inclusive = true
+                    }
+                } },
+                navBack = { navController.navigate(HomeRoutes.Conversations.name){
+                    launchSingleTop = true
+                    popUpTo(route = HomeRoutes.Conversations.name)
+                } })
         }
 
         //TODO: Create links to profile & chat screen (pass data)

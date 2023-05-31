@@ -1,5 +1,6 @@
 package com.example.kinnect.Screens
 
+import android.util.Log
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
@@ -30,6 +31,7 @@ import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextFieldDefaults
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -64,7 +66,8 @@ fun LoginScreen(
     modifier:Modifier = Modifier,
     hasError: Boolean = false,
     onNavigateToRegister:() -> Unit,
-    authViewModel: AuthViewModel
+    authViewModel: AuthViewModel,
+    onNavToConversations: () -> Unit
 ){
 
 
@@ -207,6 +210,13 @@ fun LoginScreen(
 
         }
 
+        LaunchedEffect(key1 = authViewModel.hasUser) {
+            if (authViewModel.hasUser){
+                Log.d("AAA!!!", "LaunchedEffect Running")
+                onNavToConversations.invoke()
+            }
+        }
+
 
     }
 }
@@ -215,6 +225,6 @@ fun LoginScreen(
 @Composable
 fun PreviewLoginScreen(){
     KinnectTheme() {
-        LoginScreen(onNavigateToRegister = {}, authViewModel = AuthViewModel())
+        LoginScreen(onNavigateToRegister = {}, authViewModel = AuthViewModel(), onNavToConversations = {})
     }
 }

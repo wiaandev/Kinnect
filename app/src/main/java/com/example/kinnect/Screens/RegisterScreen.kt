@@ -33,6 +33,7 @@ import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextFieldDefaults
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -70,6 +71,7 @@ fun RegisterScreen(
     modifier:Modifier = Modifier,
     hasError: Boolean = false,
     onNavigateToLogin:() -> Unit,
+    onNavigateToConversations: () -> Unit,
     authViewModel: AuthViewModel
 ){
 
@@ -82,22 +84,6 @@ fun RegisterScreen(
         mutableStateOf(false)
     }
 
-    //    State Variables
-    var firstName by remember {
-        mutableStateOf("")
-    }
-    var lastName by remember {
-        mutableStateOf("")
-    }
-    var email by remember {
-        mutableStateOf("")
-    }
-    var password by remember {
-        mutableStateOf("")
-    }
-    var confirmPassword by remember {
-        mutableStateOf("")
-    }
 
     val scrollState = rememberScrollState()
 
@@ -273,12 +259,18 @@ fun RegisterScreen(
 
 
     }
+
+    LaunchedEffect(key1 = authViewModel.hasUser) {
+        if (authViewModel.hasUser){
+            onNavigateToConversations.invoke()
+        }
+    }
 }
 
 @Preview(showSystemUi = true)
 @Composable
 fun PreviewRegisterScreen(){
     KinnectTheme() {
-        RegisterScreen(onNavigateToLogin = {}, authViewModel = AuthViewModel())
+        RegisterScreen(onNavigateToLogin = {}, authViewModel = AuthViewModel(), onNavigateToConversations = {})
     }
 }

@@ -2,6 +2,7 @@ package com.example.kinnect.Screens
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -40,10 +41,17 @@ import com.example.kinnect.ui.theme.KinnectTheme
 import com.example.kinnect.ui.theme.poppinsBody
 import com.example.kinnect.ui.theme.poppinsHeading
 import com.example.kinnect.viewModels.AuthViewModel
+import com.example.kinnect.viewModels.ConversationsViewModel
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun ConversationsScreen(modifier: Modifier = Modifier, onNavigateHousehold: () -> Unit, authViewModel: AuthViewModel){
+fun ConversationsScreen(
+    modifier: Modifier = Modifier,
+    onNavigateHousehold: () -> Unit,
+    authViewModel: AuthViewModel,
+    onNavToProfile: () -> Unit,
+    convoViewModel: ConversationsViewModel = ConversationsViewModel()
+){
 
     val authUiState = authViewModel?.authUiState
     val error = authUiState?.errorMessage != null
@@ -60,7 +68,7 @@ fun ConversationsScreen(modifier: Modifier = Modifier, onNavigateHousehold: () -
             Column(
                 Modifier
                     .size(70.dp)
-                    .background(color = Color.Red, shape = RoundedCornerShape(10.dp))) {
+                    .background(color = Color.Red, shape = RoundedCornerShape(10.dp)).clickable { onNavToProfile.invoke() }) {
                 Image(painter = painterResource(id = R.drawable.person), contentDescription = null, contentScale = ContentScale.Crop, modifier = Modifier.clip(
                     RoundedCornerShape(10.dp)
                 )
@@ -137,9 +145,6 @@ fun ConversationsScreen(modifier: Modifier = Modifier, onNavigateHousehold: () -
         
         Spacer(modifier = Modifier.size(20.dp))
 
-        Button(onClick = { authViewModel?.logoutUser(context = context)}) {
-            Text(text = "Logout", style = poppinsBody, color = MaterialTheme.colorScheme.tertiary)
-        }
 
         LazyColumn(){
             items(7){item ->
@@ -188,6 +193,6 @@ fun ConversationsScreen(modifier: Modifier = Modifier, onNavigateHousehold: () -
 @Composable
 fun PreviewConversationsScreen(){
     KinnectTheme() {
-        ConversationsScreen( onNavigateHousehold = {}, authViewModel = AuthViewModel())
+        ConversationsScreen( onNavigateHousehold = {}, authViewModel = AuthViewModel(), onNavToProfile = {})
     }
 }

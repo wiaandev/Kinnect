@@ -9,13 +9,14 @@ import androidx.compose.runtime.setValue
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.kinnect.repositories.AuthRepository
+import com.example.kinnect.repositories.FirestoreRepository
 import kotlinx.coroutines.launch
 
 class AuthViewModel (
     private val repository: AuthRepository = AuthRepository()
 ): ViewModel(){
     val currentUser = repository.currentUser
-    val hasUser: Boolean = repository.hasUser()
+    val hasUser: Boolean get() = repository.hasUser()
 
     // instance of our state values
     var authUiState by mutableStateOf(AuthUiState())
@@ -51,20 +52,29 @@ class AuthViewModel (
 
                     if(userId.isNotBlank()){ // we get a userId back
                         //success
-                        Log.d("Register Success: ", userId)
 
-                        Toast.makeText(context, "Registration Completed", Toast.LENGTH_SHORT).show()
-
-                        authUiState = authUiState.copy(authSuccess = true)
+                        FirestoreRepository().createUserInDatabase(
+                            uid = userId,
+                            email = authUiState.registerEmail,
+                            firstName = authUiState.registerFirstName,
+                            lastName = authUiState.registerLastName
+                        ){
+                            if(it){
+                                Log.d("AAA Register Success: ", userId)
+                                Toast.makeText(context, "AAA Registration Completed", Toast.LENGTH_SHORT).show()
+                                authUiState = authUiState.copy(authSuccess = true)
+                            } else {
+                                Toast.makeText(context, "AAA Something went wrong", Toast.LENGTH_SHORT).show()
+                                authUiState = authUiState.copy(authSuccess = false)
+                            }
+                        }
                     } else { // register failed
                         Log.d("Error Registering: ", "Something went wrong")
 
                         Toast.makeText(context, "Registration Failed", Toast.LENGTH_SHORT).show()
 
                         authUiState = authUiState.copy(authSuccess = false)
-
                     }
-
                 }
             }
         } catch (e: Exception){

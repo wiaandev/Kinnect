@@ -40,7 +40,7 @@ class AuthRepository {
     ) = withContext(Dispatchers.IO) {
         Firebase.auth.signInWithEmailAndPassword(email, password)
             .addOnCompleteListener{
-                if(it.isComplete){ // successfully created our user
+                if(it.isSuccessful){ // successfully created our user
                     Log.d("Login", "Successfully")
                     isCompleted.invoke(true)
                 } else { // error
