@@ -1,10 +1,14 @@
 package com.example.kinnect
 
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.Modifier
 import androidx.navigation.NavHostController
+import androidx.navigation.NavType
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
+import androidx.navigation.navArgument
+import com.example.kinnect.Screens.ChatScreen
 import com.example.kinnect.Screens.ConversationsScreen
 import com.example.kinnect.viewModels.AuthViewModel
 import com.example.kinnect.Screens.HouseholdCreateScreen
@@ -106,7 +110,14 @@ fun Navigation(
                     popUpTo(route = HomeRoutes.Conversations.name){
                         inclusive = true
                     }
-                } })
+                }
+                },
+                onNavToChat = {
+                    navController.navigate("${HomeRoutes.Chat.name}/${it}") {
+                        launchSingleTop = true
+                    }
+                }
+            )
         }
 
         composable(route = HomeRoutes.Household.name){
@@ -130,6 +141,13 @@ fun Navigation(
                     launchSingleTop = true
                     popUpTo(route = HomeRoutes.Conversations.name)
                 } })
+        }
+        
+        composable(
+            route = "${HomeRoutes.Chat.name}/{chatId}",
+            arguments = listOf(navArgument("chatId"){type = NavType.StringType; defaultValue = "chat1234"})
+        ){
+            ChatScreen(modifier = Modifier, onNavigateBack = {}, chatId = it.arguments?.getString("chatId"), name = it.arguments?.getString("name"))
         }
 
         //TODO: Create links to profile & chat screen (pass data)
