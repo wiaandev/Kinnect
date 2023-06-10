@@ -60,6 +60,8 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
+import androidx.lifecycle.viewmodel.compose.viewModel
+import com.example.kinnect.viewModels.ProfileViewModel
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -67,19 +69,23 @@ fun ProfileScreen(
     navOnSignOut: () -> Unit,
     navBack: () -> Unit,
     modifier: Modifier = Modifier,
-    viewModel: UserViewModel = UserViewModel()
+    viewModel: UserViewModel = viewModel(),
+    profileViewModel: ProfileViewModel = viewModel()
 ){
+
+    val profileUiState = profileViewModel.profileUiState
+
     val user = remember (viewModel.profile){
         derivedStateOf {viewModel.profile }
     }
 
-    var pickedImage: Uri? by remember {
-        mutableStateOf(null)
-    }
-
     val singlePhotoPickerLauncher = rememberLauncherForActivityResult(
         contract = ActivityResultContracts.PickVisualMedia(),
-        onResult = {uri -> pickedImage = uri}
+        onResult = {uri ->
+            if (uri != null) {
+                profileViewModel.handleProfileImageChange(uri)
+            }
+        }
     )
 
     Column(
@@ -102,7 +108,7 @@ fun ProfileScreen(
                 )}) {
                     AsyncImage(
                         model = ImageRequest.Builder(context = LocalContext.current)
-                            .data(pickedImage)
+                            .data(profileUiState.profileImg ?: "/")
                             .crossfade(true)
                             .build(),
                         contentDescription = null,
@@ -113,7 +119,7 @@ fun ProfileScreen(
                             .clip(RoundedCornerShape(10.dp)),
                     )
                 }
-                Text(text = "${user.value?.firstName.toString()} ${user.value?.lastName.toString()}", style = poppinsHeading, color = K_Charcoal)
+                Text(text = "${user.value?.firstName} ${user.value?.lastName}", style = poppinsHeading, color = K_Charcoal)
                 Text(text = "Add household relationship", style = poppinsH3, color = K_Charcoal)
                 Button(onClick = { /*TODO*/ }) {
                     Text(text = "Change Mood", style = poppinsBody, color = K_White)
@@ -123,8 +129,8 @@ fun ProfileScreen(
         Column(modifier.padding(20.dp)) {
 
             OutlinedTextField(
-                value = "${user.value?.firstName}",
-                onValueChange = {""},
+                value = profileUiState.firstName,
+                onValueChange = {profileViewModel.handleFirstNameStateChange(it)},
                 label = { Text(text = "First Name")},
                 modifier = Modifier
                     .fillMaxWidth()
@@ -138,7 +144,7 @@ fun ProfileScreen(
             )
 
             OutlinedTextField(
-                value = "${user.value?.lastName}",
+                value = profileUiState.lastName,
                 onValueChange = {""},
                 label = { Text(text = "Last Name")},
                 modifier = Modifier
@@ -153,7 +159,7 @@ fun ProfileScreen(
             )
 
             OutlinedTextField(
-                value = "${user.value?.email}",
+                value = profileUiState.email,
                 onValueChange = {""},
                 label = { Text(text = "Email")},
                 modifier = Modifier
@@ -169,7 +175,9 @@ fun ProfileScreen(
             )
 
             Button(
-                onClick = { /*TODO*/ },
+                onClick = {
+                          profileViewModel.saveProfileData()
+                          },
                 modifier = Modifier.fillMaxWidth(),
                 colors = ButtonDefaults.buttonColors(containerColor = K_Orange, K_White),
                 shape = RoundedCornerShape(10.dp)) {

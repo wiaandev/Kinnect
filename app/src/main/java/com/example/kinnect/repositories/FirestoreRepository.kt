@@ -5,6 +5,7 @@ import com.example.kinnect.models.Conversation
 import com.example.kinnect.models.Message
 import com.example.kinnect.models.User
 import com.google.firebase.auth.ktx.auth
+import com.google.firebase.firestore.SetOptions
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.firestore.ktx.toObject
 import com.google.firebase.ktx.Firebase
@@ -104,6 +105,23 @@ class FirestoreRepository {
                 Log.d("AAA problem adding message..", it.localizedMessage)
                 it.printStackTrace()
                 onSuccess.invoke(false)
+            }.await()
+    }
+
+    suspend fun updateProfileInformation(
+        user: User,
+        onSuccess: (Boolean) -> Unit
+    ){
+        userRef.document(user.id ?: "")
+            .set(user, SetOptions.merge())
+            .addOnSuccessListener {
+                Log.d("AAA Updated User Success: ", "Updated!!!!")
+                onSuccess.invoke(true)
+            }
+            .addOnFailureListener{
+                Log.d("AAA Update User Failed", it.localizedMessage)
+                onSuccess.invoke(false)
+                it.printStackTrace()
             }.await()
     }
 }
