@@ -12,6 +12,7 @@ import com.example.kinnect.Screens.ChatScreen
 import com.example.kinnect.Screens.ConversationsScreen
 import com.example.kinnect.viewModels.AuthViewModel
 import com.example.kinnect.Screens.HouseholdCreateScreen
+import com.example.kinnect.Screens.JoinHouseholdScreen
 import com.example.kinnect.Screens.LoginScreen
 import com.example.kinnect.Screens.ProfileScreen
 import com.example.kinnect.Screens.RegisterScreen
@@ -25,7 +26,8 @@ enum class HomeRoutes {
     Conversations,
     Chat,
     Profile,
-    Household
+    HouseholdCreate,
+    HouseHoldJoin
 
 }
 
@@ -78,8 +80,8 @@ fun Navigation(
                         inclusive = true
                     }
                 }}, authViewModel = AuthViewModel(),
-                onNavigateToConversations = {
-                    navController.navigate(HomeRoutes.Conversations.name){
+                onNavigateToHouseholdScreen = {
+                    navController.navigate(HomeRoutes.HouseholdCreate.name){
                         launchSingleTop = true
                         popUpTo(route = AuthRoutes.Register.name){
                             inclusive = true
@@ -120,15 +122,6 @@ fun Navigation(
             )
         }
 
-        composable(route = HomeRoutes.Household.name){
-            HouseholdCreateScreen(onNavigateToConversation = {navController.navigate(HomeRoutes.Conversations.name){
-                launchSingleTop = true
-                popUpTo(route = HomeRoutes.Conversations.name){
-                    inclusive = true
-                }
-            } })
-        }
-
         composable(route = HomeRoutes.Profile.name){
             ProfileScreen(
                 navOnSignOut = { navController.navigate(AuthRoutes.Login.name) {
@@ -150,7 +143,40 @@ fun Navigation(
             ChatScreen(modifier = Modifier, onNavigateBack = {}, chatId = it.arguments?.getString("chatId"), name = it.arguments?.getString("name"))
         }
 
-        //TODO: Create links to profile & chat screen (pass data)
-        //TODO: Setup our auth
+        composable(
+            route = HomeRoutes.HouseholdCreate.name,
+        ) {
+            HouseholdCreateScreen (
+                onNavigateToConversation = {navController.navigate(HomeRoutes.Conversations.name){
+                    launchSingleTop = true
+                    popUpTo(route = HomeRoutes.HouseholdCreate.name){
+                        inclusive = true
+                    }
+                } },
+                onNavigateToJoinHouseholdScreen = {navController.navigate(HomeRoutes.HouseHoldJoin.name){
+                    launchSingleTop = true
+                    popUpTo(route = HomeRoutes.HouseHoldJoin.name){
+                        inclusive = true
+                    }
+                } }
+            )
+        }
+
+        composable(route = HomeRoutes.HouseHoldJoin.name){
+            JoinHouseholdScreen(
+                onNavigateToCreateHousehold = {navController.navigate(HomeRoutes.HouseholdCreate.name){
+                    launchSingleTop = true
+                    popUpTo(route = HomeRoutes.HouseholdCreate.name){
+                        inclusive = true
+                    }
+                } },
+                onNavigateToConversation = {navController.navigate(HomeRoutes.Conversations.name){
+                    launchSingleTop = true
+                    popUpTo(route = HomeRoutes.Conversations.name){
+                        inclusive = true
+                    }
+                } }
+            )
+        }
     }
 }

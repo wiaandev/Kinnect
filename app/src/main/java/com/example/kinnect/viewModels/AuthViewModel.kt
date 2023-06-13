@@ -133,7 +133,6 @@ class AuthViewModel (
 
 // These values are for my front-end state management
 data class AuthUiState(
-
     val isLoading: Boolean = false,
     val errorMessage: String? = null,
     val authSuccess: Boolean = false,
@@ -148,5 +147,4 @@ data class AuthUiState(
     val registerEmail: String = "",
     val registerPassword: String = "",
     val registerConfirmPassword: String = ""
-
-    )
+)

@@ -53,6 +53,7 @@ import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.text.input.VisualTransformation
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.lifecycle.viewmodel.compose.viewModel
 import com.example.kinnect.R
 import com.example.kinnect.ui.theme.K_Charcoal
 import com.example.kinnect.ui.theme.K_Orange
@@ -68,11 +69,11 @@ import com.example.kinnect.viewModels.AuthViewModel
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun RegisterScreen(
-    modifier:Modifier = Modifier,
+    modifier: Modifier = Modifier,
     hasError: Boolean = false,
-    onNavigateToLogin:() -> Unit,
-    onNavigateToConversations: () -> Unit,
-    authViewModel: AuthViewModel
+    onNavigateToLogin: () -> Unit,
+    onNavigateToHouseholdScreen: () -> Unit,
+    authViewModel: AuthViewModel = viewModel(),
 ){
 
     val authUiState = authViewModel?.authUiState
@@ -235,7 +236,8 @@ fun RegisterScreen(
             Spacer(modifier = Modifier.size(30.dp))
 
             Button(
-                onClick = { authViewModel.createNewUser(context) },
+//                onClick = { authViewModel.createNewUser(context) },
+                onClick={onNavigateToHouseholdScreen.invoke()},
                 modifier = Modifier.fillMaxWidth(),
                 colors = ButtonDefaults.buttonColors(containerColor = K_Orange, K_White),
                 shape = RoundedCornerShape(10.dp)) {
@@ -260,17 +262,17 @@ fun RegisterScreen(
 
     }
 
-    LaunchedEffect(key1 = authViewModel.hasUser) {
-        if (authViewModel.hasUser){
-            onNavigateToConversations.invoke()
-        }
-    }
+//    LaunchedEffect(key1 = authViewModel.hasUser) {
+//        if (authViewModel.hasUser){
+//            onNavigateToHouseholdScreen.invoke()
+//        }
+//    }
 }
 
 @Preview(showSystemUi = true)
 @Composable
 fun PreviewRegisterScreen(){
     KinnectTheme() {
-        RegisterScreen(onNavigateToLogin = {}, authViewModel = AuthViewModel(), onNavigateToConversations = {})
+        RegisterScreen(onNavigateToLogin = {}, authViewModel = AuthViewModel(), onNavigateToHouseholdScreen = {})
     }
 }

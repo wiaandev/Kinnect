@@ -27,6 +27,8 @@ class FirestoreRepository {
         email: String,
         firstName: String,
         lastName: String,
+        householdName: String,
+        householdId: String,
         onSuccess: (Boolean) -> Unit
     ){
         db.collection("users").document(uid)
@@ -36,7 +38,9 @@ class FirestoreRepository {
                     email = email,
                     firstName = firstName,
                     lastName = lastName,
-                    profileImg = ""
+                    profileImg = "",
+                    householdName = householdName,
+                    householdId = householdId
                 )
             )
             .addOnSuccessListener {

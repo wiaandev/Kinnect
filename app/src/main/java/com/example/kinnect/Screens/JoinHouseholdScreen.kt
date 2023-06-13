@@ -62,13 +62,13 @@ import androidx.lifecycle.viewmodel.compose.viewModel
 @SuppressLint("ServiceCast")
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun HouseholdCreateScreen(
+fun JoinHouseholdScreen(
     onNavigateToConversation: () -> Unit,
-    onNavigateToJoinHouseholdScreen: () -> Unit,
+    onNavigateToCreateHousehold: () -> Unit,
     viewModel: AuthViewModel = viewModel(),
 ){
 
-    var householdName by remember {
+    var householdId by remember {
         mutableStateOf("")
     }
 
@@ -78,23 +78,11 @@ fun HouseholdCreateScreen(
     val context = LocalContext.current
     val clipboardManager = LocalClipboardManager.current
 
-    fun copyToClipboard(){
-        clipboardManager.setText(AnnotatedString("${householdName}-${householdCode.value}"))
-        Toast.makeText(context, "Copied to Clipboard", Toast.LENGTH_SHORT).show()
-    }
-
-    fun generateCode(length: Int): String {
-        val charPool = ('a'..'z') + ('A'..'Z') + ('0'..'9')
-        return (1..length)
-            .map { charPool.random() }
-            .joinToString("")
-    }
 
     fun onCheck(){
-        if(householdName == ""){
+        if(householdId == ""){
             hasError = true
         } else {
-
             onNavigateToConversation.invoke()
         }
     }
@@ -104,8 +92,8 @@ fun HouseholdCreateScreen(
         modifier = Modifier
             .fillMaxSize()
             .background(K_White),
-            horizontalAlignment = Alignment.CenterHorizontally,
-            verticalArrangement = Arrangement.Center
+        horizontalAlignment = Alignment.CenterHorizontally,
+        verticalArrangement = Arrangement.Center
     ) {
         Column(modifier = Modifier
             .padding(20.dp)
@@ -113,12 +101,12 @@ fun HouseholdCreateScreen(
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
             Row() {
-              Text(text = "Kinnect your household", style = poppinsHeading, textAlign = TextAlign.Center, color = K_Orange)
+                Text(text = "Join your household", style = poppinsHeading, textAlign = TextAlign.Center, color = K_Orange)
             }
             Spacer(modifier = Modifier.size(30.dp))
             Row() {
                 Image(
-                    painterResource(R.drawable.household),
+                    painterResource(R.drawable.join_household),
                     contentDescription = null,
                     modifier = Modifier.width(300.dp)
                 )
@@ -126,9 +114,9 @@ fun HouseholdCreateScreen(
             Spacer(modifier = Modifier.size(30.dp))
             Row() {
                 OutlinedTextField(
-                    value = householdName,
-                    onValueChange = {householdName = it},
-                    label = { Text(text = "Household Name")},
+                    value = householdId,
+                    onValueChange = {householdId = it},
+                    label = { Text(text = "Household Id")},
                     modifier = Modifier
                         .fillMaxWidth()
                         .padding(5.dp), shape = RoundedCornerShape(10.dp),
@@ -145,71 +133,25 @@ fun HouseholdCreateScreen(
                 Text(text = "Enter your household name!", style = poppinsBody, color = Color.Red)
             }
 
-            if(householdCode.value != ""){
 
-                Spacer(modifier = Modifier.size(20.dp))
-
-                Text(text = "Share code with household members.", style = poppinsBody)
-
-                Spacer(modifier = Modifier.size(10.dp))
-
-                Row(modifier = Modifier.height(50.dp)) {
-                    Text(
-                        text = "${householdName}-${householdCode.value}",
-                        Modifier
-                            .background(K_OrangeLighter)
-                            .padding(10.dp)
-                            .width(200.dp), textAlign = TextAlign.Center, color = K_Charcoal
-                    )
-
-                    Spacer(modifier = Modifier.size(10.dp))
-                    Button(onClick = { copyToClipboard() }, colors = ButtonDefaults.buttonColors(containerColor = K_Charcoal, K_White), shape = RoundedCornerShape(10.dp)) {
-                        Icon(imageVector = Icons.Outlined.ContentCopy, contentDescription = null)
-                    }
-                }
-                Spacer(modifier = Modifier.size(30.dp))
-            }
-
-
-            if(householdCode.value != ""){
                 Row() {
                     Button(onClick = { onCheck() },
                         modifier = Modifier.fillMaxWidth(),
                         colors = ButtonDefaults.buttonColors(containerColor = K_Orange, K_White),
                         shape = RoundedCornerShape(10.dp)
                     ) {
-                        Text(text = "Create Household",
+                        Text(text = "Join Household",
                             style = poppinsH3,
                             modifier = Modifier
                                 .padding(10.dp))
                     }
                 }
                 Spacer(modifier = Modifier.size(30.dp))
-            } else {
-                Row() {
-                    Button(
-                        onClick = {
-                            householdCode.value = generateCode(6)
-                            Log.d("CODE: ", householdCode.value)
-                            Log.d("CODE: ", householdName)
-                            Log.d("AAA USER: ", viewModel.authUiState.toString())
-                        },
-                        modifier = Modifier.fillMaxWidth(),
-                        colors = ButtonDefaults.buttonColors(containerColor = K_Orange, K_White),
-                        shape = RoundedCornerShape(10.dp)) {
-                        Text(text = "Generate Code",
-                            style = poppinsH3,
-                            modifier = Modifier
-                                .padding(10.dp))
-                    }
-                }
-                Spacer(modifier = Modifier.size(30.dp))
-            }
 
 
             Row(modifier = Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.Center, verticalAlignment = Alignment.CenterVertically) {
                 Text(text = "or", style = poppinsBody, color = K_Charcoal)
-                Button(onClick = { onNavigateToJoinHouseholdScreen.invoke() }, colors = ButtonDefaults.buttonColors(containerColor = K_White, K_Orange)) {
+                Button(onClick = { onNavigateToCreateHousehold.invoke() }, colors = ButtonDefaults.buttonColors(containerColor = K_White, K_Orange)) {
                     Text(text = "Join Household", style = poppinsBody)
                 }
             }
@@ -219,8 +161,8 @@ fun HouseholdCreateScreen(
 
 @Preview(showSystemUi = true)
 @Composable
-fun PreviewHouseholdCreateScreen(){
+fun PreviewJoinHouseholdScreen(){
     KinnectTheme() {
-        HouseholdCreateScreen(onNavigateToConversation = {}, onNavigateToJoinHouseholdScreen = {})
+        JoinHouseholdScreen(onNavigateToConversation = {}, onNavigateToCreateHousehold = {})
     }
 }
