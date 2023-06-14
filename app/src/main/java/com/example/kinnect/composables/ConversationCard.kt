@@ -63,7 +63,7 @@ fun ConversationCard(conversation: Conversation, onNavToChat: (String) -> Unit, 
                     .data(conversation.image)
                     .crossfade(true)
                     .build(),
-                contentDescription = conversation.title,
+                contentDescription = conversation.firstName,
                 placeholder = painterResource(id = R.drawable.ic_launcher_foreground),
                 modifier = Modifier
                     .fillMaxWidth()
@@ -74,7 +74,7 @@ fun ConversationCard(conversation: Conversation, onNavToChat: (String) -> Unit, 
         }
         Spacer(modifier = Modifier.size(20.dp))
       Column() {
-          Text(text = conversation.title, style = poppinsH3, color = K_Charcoal)
+          Text(text = "${conversation.firstName} ${conversation.lastName}", style = poppinsH3, color = K_Charcoal)
           Text(text = conversation.mood, style = poppinsBody, color = K_Charcoal)
       }
     }

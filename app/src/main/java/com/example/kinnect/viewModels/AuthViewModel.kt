@@ -146,5 +146,5 @@ data class AuthUiState(
     val registerLastName: String = "",
     val registerEmail: String = "",
     val registerPassword: String = "",
-    val registerConfirmPassword: String = ""
+    val registerConfirmPassword: String = "",
 )

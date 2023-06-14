@@ -59,6 +59,10 @@ import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
+import androidx.compose.ui.platform.LocalContext
+import coil.compose.AsyncImage
+import coil.request.ImageRequest
+import com.example.kinnect.viewModels.ProfileViewModel
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -68,6 +72,7 @@ fun ChatScreen(
     chatId: String?,
     name: String?,
     modifier: Modifier,
+    profileViewModel: ProfileViewModel = viewModel(),
 ){
 
 
@@ -108,14 +113,23 @@ fun ChatScreen(
                     .size(70.dp)
                     .background(color = Color.Red, shape = RoundedCornerShape(bottomEnd = 10.dp))
                     .clickable { Log.d("AAA: Going to profile", "YAY") }) {
-                Image(painter = painterResource(id = R.drawable.person), contentDescription = null, contentScale = ContentScale.Crop, modifier = Modifier.clip(
-                    RoundedCornerShape(10.dp)
-                )
+                AsyncImage(
+                    model = ImageRequest.Builder(context = LocalContext.current)
+                        .data("")
+                        .crossfade(true)
+                        .build(),
+                    contentDescription = "",
+                    placeholder = painterResource(id = R.drawable.ic_launcher_foreground),
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .height(194.dp)
+                        .clip(RoundedCornerShape(10.dp)),
+                    contentScale = ContentScale.Crop
                 )
             }
             Spacer(modifier.size(10.dp))
             Column() {
-                Text(text = name ?:"" , style = poppinsH2, color = K_Charcoal)
+                Text(text = viewModel.currentUserId ?:"" , style = poppinsH2, color = K_Charcoal)
                 Text(text = "Brother", style = poppinsH3, color = K_Charcoal)
             }
             Spacer(modifier.size(10.dp))

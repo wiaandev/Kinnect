@@ -1,5 +1,6 @@
 package com.example.kinnect.composables
 
+import android.util.Log
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Column
@@ -29,9 +30,18 @@ import com.example.kinnect.ui.theme.K_WhiteDark
 import com.example.kinnect.ui.theme.KinnectTheme
 import com.example.kinnect.ui.theme.poppinsBody
 import com.example.kinnect.ui.theme.poppinsH3
+import java.text.DateFormat
+import java.util.Date
 
 @Composable
 fun MessageToBubble (message: Message, modifier: Modifier = Modifier){
+    val timestamp = message.timestamp
+    val milliseconds = timestamp.seconds * 1000 + timestamp.nanoseconds / 1000000
+    val sdf = DateFormat.getDateTimeInstance()
+    val netDate = Date(milliseconds)
+    val date = sdf.format(netDate).toString()
+    Log.d("TAG170", date)
+
     Row(modifier.padding(10.dp), verticalAlignment = Alignment.Bottom) {
         Column(modifier.padding(start = 8.dp, end = 16.dp)) {
             Column(
@@ -49,7 +59,7 @@ fun MessageToBubble (message: Message, modifier: Modifier = Modifier){
                     modifier = Modifier.align(Alignment.End)
                 )
                 Text(
-                    text = message.timestamp.toDate().toString(),
+                    text = date,
                     style= poppinsBody,
                     color = K_Charcoal,
                     modifier = Modifier.align(Alignment.Start)

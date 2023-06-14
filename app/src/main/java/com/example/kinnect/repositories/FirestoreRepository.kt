@@ -4,10 +4,8 @@ import android.util.Log
 import com.example.kinnect.models.Conversation
 import com.example.kinnect.models.Message
 import com.example.kinnect.models.User
-import com.google.firebase.auth.ktx.auth
 import com.google.firebase.firestore.SetOptions
 import com.google.firebase.firestore.ktx.firestore
-import com.google.firebase.firestore.ktx.toObject
 import com.google.firebase.ktx.Firebase
 import kotlinx.coroutines.tasks.await
 
@@ -27,8 +25,6 @@ class FirestoreRepository {
         email: String,
         firstName: String,
         lastName: String,
-        householdName: String,
-        householdId: String,
         onSuccess: (Boolean) -> Unit
     ){
         db.collection("users").document(uid)
@@ -39,8 +35,6 @@ class FirestoreRepository {
                     firstName = firstName,
                     lastName = lastName,
                     profileImg = "",
-                    householdName = householdName,
-                    householdId = householdId
                 )
             )
             .addOnSuccessListener {
@@ -56,19 +50,23 @@ class FirestoreRepository {
 
 
     suspend fun getAllConversations(
+        uid: String,
         onSuccess: (List<Conversation>?) -> Unit
     ){
         Log.d("AAA Getting convos in repo...", "UesQ")
         val conversations = arrayListOf<Conversation>()
 
-        conversationsRef.orderBy("title").get()
+        conversationsRef.orderBy("firstName").get()
             .addOnSuccessListener {
                 for(document in it){
                     conversations.add(
                         Conversation(
-                            id = document.id,
-                            title = document.data["title"].toString(),
-                            image = document.data["image"].toString()
+                            userId = document.id,
+                            image = document.data["image"].toString(),
+                            firstName = document.data["firstName"].toString(),
+                            lastName = document.data["lastName"].toString(),
+                            mood = document.data["mood"].toString(),
+                            email = document.data["email"].toString(),
                         )
                     )
                 }
@@ -78,7 +76,7 @@ class FirestoreRepository {
             .addOnFailureListener{
                 Log.d("AAA Error trying to retrieve conversation: ", it.localizedMessage)
                 onSuccess(null)
-            }.await()
+            }.await()   
     }
 
     suspend fun getUserData(uid: String, onSuccess: (User?) -> Unit){

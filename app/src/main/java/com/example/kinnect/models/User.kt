@@ -6,6 +6,4 @@ class User (
     val firstName: String = "",
     val lastName: String = "",
     val profileImg: String = "",
-    val householdName: String = "",
-    val householdId: String = ""
 )

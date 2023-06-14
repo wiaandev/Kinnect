@@ -11,8 +11,6 @@ import androidx.navigation.navArgument
 import com.example.kinnect.Screens.ChatScreen
 import com.example.kinnect.Screens.ConversationsScreen
 import com.example.kinnect.viewModels.AuthViewModel
-import com.example.kinnect.Screens.HouseholdCreateScreen
-import com.example.kinnect.Screens.JoinHouseholdScreen
 import com.example.kinnect.Screens.LoginScreen
 import com.example.kinnect.Screens.ProfileScreen
 import com.example.kinnect.Screens.RegisterScreen
@@ -25,10 +23,7 @@ enum class AuthRoutes {
 enum class HomeRoutes {
     Conversations,
     Chat,
-    Profile,
-    HouseholdCreate,
-    HouseHoldJoin
-
+    Profile
 }
 
 // Generating our navigation Navhost
@@ -72,33 +67,27 @@ fun Navigation(
         }
 
         // my Register screen
-        composable(route= AuthRoutes.Register.name){
+        composable(
+            route= AuthRoutes.Register.name
+        ){
             RegisterScreen(
                 onNavigateToLogin = {navController.navigate(AuthRoutes.Login.name){
                     launchSingleTop = true
                     popUpTo(route = AuthRoutes.Register.name){
                         inclusive = true
                     }
-                }}, authViewModel = AuthViewModel(),
-                onNavigateToHouseholdScreen = {
-                    navController.navigate(HomeRoutes.HouseholdCreate.name){
+                }},
+                onNavigateToConversations = {
+                    navController.navigate(HomeRoutes.Conversations.name){
                         launchSingleTop = true
                         popUpTo(route = AuthRoutes.Register.name){
                             inclusive = true
                         }
                     }
-                }
+                },
+                authViewModel = AuthViewModel(),
             )
         }
-
-//        composable(route = HomeRoutes.Conversations.name){
-//            ConversationsScreen(onSignOut = {navController.navigate(AuthRoutes.Login.name){
-//                launchSingleTop = true
-//                popUpTo(route = AuthRoutes.Login.name){
-//                    inclusive = true
-//                }
-//            } })
-//        }
 
         composable(route = HomeRoutes.Conversations.name){
             ConversationsScreen(onNavigateHousehold = {navController.navigate(AuthRoutes.Register.name){
@@ -141,42 +130,6 @@ fun Navigation(
             arguments = listOf(navArgument("chatId"){type = NavType.StringType; defaultValue = "chat1234"})
         ){
             ChatScreen(modifier = Modifier, onNavigateBack = {}, chatId = it.arguments?.getString("chatId"), name = it.arguments?.getString("name"))
-        }
-
-        composable(
-            route = HomeRoutes.HouseholdCreate.name,
-        ) {
-            HouseholdCreateScreen (
-                onNavigateToConversation = {navController.navigate(HomeRoutes.Conversations.name){
-                    launchSingleTop = true
-                    popUpTo(route = HomeRoutes.HouseholdCreate.name){
-                        inclusive = true
-                    }
-                } },
-                onNavigateToJoinHouseholdScreen = {navController.navigate(HomeRoutes.HouseHoldJoin.name){
-                    launchSingleTop = true
-                    popUpTo(route = HomeRoutes.HouseHoldJoin.name){
-                        inclusive = true
-                    }
-                } }
-            )
-        }
-
-        composable(route = HomeRoutes.HouseHoldJoin.name){
-            JoinHouseholdScreen(
-                onNavigateToCreateHousehold = {navController.navigate(HomeRoutes.HouseholdCreate.name){
-                    launchSingleTop = true
-                    popUpTo(route = HomeRoutes.HouseholdCreate.name){
-                        inclusive = true
-                    }
-                } },
-                onNavigateToConversation = {navController.navigate(HomeRoutes.Conversations.name){
-                    launchSingleTop = true
-                    popUpTo(route = HomeRoutes.Conversations.name){
-                        inclusive = true
-                    }
-                } }
-            )
         }
     }
 }

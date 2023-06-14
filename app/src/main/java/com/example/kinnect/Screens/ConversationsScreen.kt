@@ -33,6 +33,8 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
+import coil.compose.AsyncImage
+import coil.request.ImageRequest
 import com.example.kinnect.R
 import com.example.kinnect.composables.Badge
 import com.example.kinnect.composables.ConversationCard
@@ -46,6 +48,7 @@ import com.example.kinnect.ui.theme.poppinsBody
 import com.example.kinnect.ui.theme.poppinsHeading
 import com.example.kinnect.viewModels.AuthViewModel
 import com.example.kinnect.viewModels.ConversationsViewModel
+import com.example.kinnect.viewModels.ProfileViewModel
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -55,7 +58,8 @@ fun ConversationsScreen(
     authViewModel: AuthViewModel,
     onNavToProfile: () -> Unit,
     onNavToChat: (chatId: String) -> Unit,
-    convoViewModel: ConversationsViewModel = viewModel()
+    convoViewModel: ConversationsViewModel = viewModel(),
+    profileViewModel: ProfileViewModel = viewModel()
 ){
 
     val allConversations = convoViewModel.convoList ?: listOf<Conversation>()
@@ -81,9 +85,18 @@ fun ConversationsScreen(
                     .size(70.dp)
                     .background(color = Color.Red, shape = RoundedCornerShape(10.dp))
                     .clickable { onNavToProfile.invoke() }) {
-                Image(painter = painterResource(id = R.drawable.person), contentDescription = null, contentScale = ContentScale.Crop, modifier = Modifier.clip(
-                    RoundedCornerShape(10.dp)
-                )
+                AsyncImage(
+                    model = ImageRequest.Builder(context = LocalContext.current)
+                        .data(profileViewModel.profileUiState.profileImg)
+                        .crossfade(true)
+                        .build(),
+                    contentDescription = "",
+                    placeholder = painterResource(id = R.drawable.ic_launcher_foreground),
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .height(194.dp)
+                        .clip(RoundedCornerShape(10.dp)),
+                    contentScale = ContentScale.Crop
                 )
             }
         }
@@ -161,11 +174,13 @@ fun ConversationsScreen(
         LazyColumn(){
             items(allConversations){conversation ->
                 ConversationCard(Conversation(
-                    title = conversation.title,
+                    firstName = conversation.firstName,
+                    lastName = conversation.lastName,
+                    email = conversation.email,
                     image = conversation.image,
                     mood = conversation.mood,
                 ), onNavToChat = onNavToChat,
-                conversationId = conversation.id)
+                conversationId = conversation.userId)
 
                 Spacer(modifier = Modifier.size(30.dp))
             }
