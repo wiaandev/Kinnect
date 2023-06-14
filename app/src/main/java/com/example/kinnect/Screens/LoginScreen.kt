@@ -52,6 +52,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.example.kinnect.viewModels.AuthViewModel
 import com.example.kinnect.R
+import com.example.kinnect.services.MyNotification
 import com.example.kinnect.ui.theme.K_Charcoal
 import com.example.kinnect.ui.theme.K_Orange
 import com.example.kinnect.ui.theme.K_White
@@ -180,6 +181,24 @@ fun LoginScreen(
                 colors = ButtonDefaults.buttonColors(containerColor = K_Orange, K_White),
                 shape = RoundedCornerShape(10.dp)) {
                 Text(text = "Login",
+                    style = poppinsH3,
+                    modifier = Modifier
+                        .padding(10.dp))
+            }
+
+            Button(
+                onClick = {
+                          val myNotification = MyNotification(
+                            context,
+                            "Test Notifcation",
+                            "This is my very first notifcation"
+                          )
+                    myNotification.showNotification()
+                },
+                modifier = Modifier.fillMaxWidth(),
+                colors = ButtonDefaults.buttonColors(containerColor = K_Orange, K_White),
+                shape = RoundedCornerShape(10.dp)) {
+                Text(text = "Test Notifcaiotn",
                     style = poppinsH3,
                     modifier = Modifier
                         .padding(10.dp))

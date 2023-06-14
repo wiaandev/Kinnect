@@ -102,95 +102,100 @@ fun ChatScreen(
 
     val allMessages = viewModel.messageList ?: listOf<Message>()
 
-    Column(modifier.fillMaxSize()) {
-        Row(
-            modifier
-                .fillMaxWidth()
-                .background(K_Orange, RoundedCornerShape(bottomStart = 10.dp, bottomEnd = 10.dp))
-                .padding(20.dp)) {
-            Column(
-                Modifier
-                    .size(70.dp)
-                    .background(color = Color.Red, shape = RoundedCornerShape(bottomEnd = 10.dp))
-                    .clickable { Log.d("AAA: Going to profile", "YAY") }) {
-                AsyncImage(
-                    model = ImageRequest.Builder(context = LocalContext.current)
-                        .data("")
-                        .crossfade(true)
-                        .build(),
-                    contentDescription = "",
-                    placeholder = painterResource(id = R.drawable.ic_launcher_foreground),
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .height(194.dp)
-                        .clip(RoundedCornerShape(10.dp)),
-                    contentScale = ContentScale.Crop
-                )
-            }
-            Spacer(modifier.size(10.dp))
-            Column() {
-                Text(text = viewModel.currentUserId ?:"" , style = poppinsH2, color = K_Charcoal)
-                Text(text = "Brother", style = poppinsH3, color = K_Charcoal)
-            }
-            Spacer(modifier.size(10.dp))
-            Button(
-                onClick = { Log.d("PROFILE GOING", "YAY") },
-                colors = ButtonDefaults.buttonColors(containerColor = K_White, K_Charcoal),
-                shape = RoundedCornerShape(10.dp)) {
-                Text(text = "View Profile",
-                    style = poppinsBody,
-                    modifier = Modifier
-                        .padding(10.dp))
-            }
-        }
-        
-        Spacer(modifier.size(20.dp))
+    Column(modifier.background(K_White).fillMaxSize()) {
+        Column(modifier.fillMaxSize()) {
+            Row(
+                modifier
+                    .fillMaxWidth()
+                    .background(K_Orange, RoundedCornerShape(bottomStart = 10.dp, bottomEnd = 10.dp))
+                    .padding(20.dp)) {
+                Column(
+                    Modifier
+                        .size(70.dp)
+                        .background(color = Color.Red, shape = RoundedCornerShape(bottomEnd = 10.dp))
+                        .clickable { Log.d("AAA: Going to profile", "YAY") }) {
+                    AsyncImage(
+                        model = ImageRequest.Builder(context = LocalContext.current)
+                            .data("")
+                            .crossfade(true)
+                            .build(),
+                        contentDescription = "",
+                        placeholder = painterResource(id = R.drawable.ic_launcher_foreground),
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .height(194.dp)
+                            .clip(RoundedCornerShape(10.dp)),
+                        contentScale = ContentScale.Crop
+                    )
+                }
+                Spacer(modifier.size(10.dp))
+                Column() {
+                    Text(text = "Steve" , style = poppinsH2, color = K_Charcoal)
+                    Text(text = "Brother", style = poppinsH3, color = K_Charcoal)
+                }
 
-        // Lazy Column Insert Here
-        LazyColumn(
-            modifier.weight(1f),
-            reverseLayout = true
-        ){
-            items(allMessages){message ->
-                if(viewModel.currentUserId == message.fromUserId){
-                    MessageToBubble(message)
-                } else {
-                    MessageFromBubble(message)
+                Spacer(modifier.size(10.dp))
+                Button(
+                    onClick = { Log.d("PROFILE GOING", "YAY") },
+                    colors = ButtonDefaults.buttonColors(containerColor = K_White, K_Charcoal),
+                    shape = RoundedCornerShape(10.dp)) {
+                    Text(text = "View Profile",
+                        style = poppinsBody,
+                        modifier = Modifier
+                            .padding(10.dp))
+                }
+            }
+
+            Spacer(modifier.size(20.dp))
+
+            // Lazy Column Insert Here
+            LazyColumn(
+                modifier.weight(1f),
+                reverseLayout = true
+            ){
+                items(allMessages){message ->
+                    if(viewModel.currentUserId == message.fromUserId){
+                        MessageToBubble(message)
+                    } else {
+                        MessageFromBubble(message)
+                    }
+                }
+            }
+
+            Row(
+                modifier
+                    .padding(1.dp)
+                    .fillMaxWidth(), horizontalArrangement = Arrangement.SpaceEvenly, verticalAlignment = Alignment.CenterVertically) {
+
+                OutlinedTextField(
+                    value = newMessage,
+                    onValueChange = {newMessage = it},
+                    label = { Text(text = "Enter Message...")},
+                    modifier = Modifier
+                        .padding(5.dp), shape = RoundedCornerShape(10.dp),
+                    colors = TextFieldDefaults.outlinedTextFieldColors(
+                        focusedBorderColor = K_Orange,
+                        unfocusedBorderColor = K_CharcoalLight,
+                        textColor = K_Charcoal,
+                    ),
+                    keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Email)
+                )
+
+                Button(
+                    onClick = {
+                        viewModel.sendNewMessage(newMessage, chatId ?: "")
+                        newMessage = ""
+                    },
+                    colors = ButtonDefaults.buttonColors(containerColor = K_Orange, K_White),
+                    shape = RoundedCornerShape(10.dp)) {
+                    Icon(imageVector = Icons.Outlined.Send, contentDescription = null)
                 }
             }
         }
-
-        Row(
-            modifier
-                .padding(1.dp)
-                .fillMaxWidth(), horizontalArrangement = Arrangement.SpaceEvenly, verticalAlignment = Alignment.CenterVertically) {
-
-            OutlinedTextField(
-                value = newMessage,
-                onValueChange = {newMessage = it},
-                label = { Text(text = "Enter Message...")},
-                modifier = Modifier
-                    .padding(5.dp), shape = RoundedCornerShape(10.dp),
-                colors = TextFieldDefaults.outlinedTextFieldColors(
-                    focusedBorderColor = K_Orange,
-                    unfocusedBorderColor = K_CharcoalLight,
-                    textColor = K_Charcoal,
-                ),
-                keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Email)
-            )
-
-            Button(
-                onClick = {
-                    viewModel.sendNewMessage(newMessage, chatId ?: "")
-                    newMessage = ""
-                },
-                colors = ButtonDefaults.buttonColors(containerColor = K_White, K_Charcoal),
-                shape = RoundedCornerShape(10.dp)) {
-                Icon(imageVector = Icons.Outlined.Send, contentDescription = null)
-            }
-        }
     }
-}
+    }
+
+
 
 @Preview(showSystemUi = true)
 @Composable

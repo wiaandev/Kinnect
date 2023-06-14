@@ -103,70 +103,70 @@ fun ConversationsScreen(
         
         Spacer(modifier = Modifier.size(20.dp))
 
-        Row(
-            Modifier
-                .background(
-                    brush = Brush.horizontalGradient(
-                        listOf(K_Orange, K_OrangeLight)
-                    ),
-                    shape = RoundedCornerShape(10.dp)
-                )
-                .padding(10.dp)
-                .fillMaxWidth()
-                ) {
-            Column(horizontalAlignment = Alignment.CenterHorizontally, modifier = Modifier
-                .fillMaxWidth()
-                .padding(10.dp)) {
-                Row() {
-                    Column(horizontalAlignment = Alignment.CenterHorizontally, verticalArrangement = Arrangement.Center) {
-                        Text(text = "Duvenhage", color = K_White, style = poppinsHeading, textAlign = TextAlign.Center)
-                        Text(text = "Household Mood", style = poppinsBody, color = K_White)
-                        LinearProgressIndicator(progress = 0.7f, color = K_Charcoal, modifier = Modifier.height(10.dp))
-                    }
-                }
-                Spacer(modifier = Modifier.size(20.dp))
-                Badge()
-                Row(horizontalArrangement = Arrangement.SpaceBetween, modifier = Modifier.fillMaxWidth()) {
-                    Column(
-                        Modifier
-                            .size(50.dp)
-                            .background(color = Color.Red, shape = RoundedCornerShape(10.dp))) {
-                        Image(painter = painterResource(id = R.drawable.person), contentDescription = null, contentScale = ContentScale.Crop, modifier = Modifier.clip(
-                            RoundedCornerShape(10.dp)
-                        )
-                        )
-                    }
-                    Column(
-                        Modifier
-                            .size(50.dp)
-                            .background(color = Color.Red, shape = RoundedCornerShape(10.dp))) {
-                        Image(painter = painterResource(id = R.drawable.person), contentDescription = null, contentScale = ContentScale.Crop, modifier = Modifier.clip(
-                            RoundedCornerShape(10.dp)
-                        )
-                        )
-                    }
-                    Column(
-                        Modifier
-                            .size(50.dp)
-                            .background(color = Color.Red, shape = RoundedCornerShape(10.dp))) {
-                        Image(painter = painterResource(id = R.drawable.person), contentDescription = null, contentScale = ContentScale.Crop, modifier = Modifier.clip(
-                            RoundedCornerShape(10.dp)
-                        )
-                        )
-                    }
-                    Column(
-                        Modifier
-                            .size(50.dp)
-                            .background(color = Color.Red, shape = RoundedCornerShape(10.dp))) {
-                        Image(painter = painterResource(id = R.drawable.person), contentDescription = null, contentScale = ContentScale.Crop, modifier = Modifier.clip(
-                            RoundedCornerShape(10.dp)
-                        )
-                        )
-                    }
-                }
-
-            }
-            }
+//        Row(
+//            Modifier
+//                .background(
+//                    brush = Brush.horizontalGradient(
+//                        listOf(K_Orange, K_OrangeLight)
+//                    ),
+//                    shape = RoundedCornerShape(10.dp)
+//                )
+//                .padding(10.dp)
+//                .fillMaxWidth()
+//                ) {
+//            Column(horizontalAlignment = Alignment.CenterHorizontally, modifier = Modifier
+//                .fillMaxWidth()
+//                .padding(10.dp)) {
+//                Row() {
+//                    Column(horizontalAlignment = Alignment.CenterHorizontally, verticalArrangement = Arrangement.Center) {
+//                        Text(text = "Duvenhage", color = K_White, style = poppinsHeading, textAlign = TextAlign.Center)
+//                        Text(text = "Household Mood", style = poppinsBody, color = K_White)
+//                        LinearProgressIndicator(progress = 0.7f, color = K_Charcoal, modifier = Modifier.height(10.dp))
+//                    }
+//                }
+//                Spacer(modifier = Modifier.size(20.dp))
+//                Badge()
+//                Row(horizontalArrangement = Arrangement.SpaceBetween, modifier = Modifier.fillMaxWidth()) {
+//                    Column(
+//                        Modifier
+//                            .size(50.dp)
+//                            .background(color = Color.Red, shape = RoundedCornerShape(10.dp))) {
+//                        Image(painter = painterResource(id = R.drawable.person), contentDescription = null, contentScale = ContentScale.Crop, modifier = Modifier.clip(
+//                            RoundedCornerShape(10.dp)
+//                        )
+//                        )
+//                    }
+//                    Column(
+//                        Modifier
+//                            .size(50.dp)
+//                            .background(color = Color.Red, shape = RoundedCornerShape(10.dp))) {
+//                        Image(painter = painterResource(id = R.drawable.person), contentDescription = null, contentScale = ContentScale.Crop, modifier = Modifier.clip(
+//                            RoundedCornerShape(10.dp)
+//                        )
+//                        )
+//                    }
+//                    Column(
+//                        Modifier
+//                            .size(50.dp)
+//                            .background(color = Color.Red, shape = RoundedCornerShape(10.dp))) {
+//                        Image(painter = painterResource(id = R.drawable.person), contentDescription = null, contentScale = ContentScale.Crop, modifier = Modifier.clip(
+//                            RoundedCornerShape(10.dp)
+//                        )
+//                        )
+//                    }
+//                    Column(
+//                        Modifier
+//                            .size(50.dp)
+//                            .background(color = Color.Red, shape = RoundedCornerShape(10.dp))) {
+//                        Image(painter = painterResource(id = R.drawable.person), contentDescription = null, contentScale = ContentScale.Crop, modifier = Modifier.clip(
+//                            RoundedCornerShape(10.dp)
+//                        )
+//                        )
+//                    }
+//                }
+//
+//            }
+//            }
         
         Spacer(modifier = Modifier.size(20.dp))
 

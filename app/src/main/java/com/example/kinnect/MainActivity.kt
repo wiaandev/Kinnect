@@ -1,5 +1,6 @@
 package com.example.kinnect
 
+import android.content.Intent
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
@@ -19,6 +20,7 @@ import com.example.kinnect.Screens.ConversationsScreen
 import com.example.kinnect.viewModels.AuthViewModel
 import com.example.kinnect.Screens.LoginScreen
 import com.example.kinnect.Screens.RegisterScreen
+import com.example.kinnect.services.BackgroundService
 import com.example.kinnect.ui.theme.KinnectTheme
 import com.example.kinnect.ui.theme.poppinsBody
 
@@ -41,6 +43,14 @@ class MainActivity : ComponentActivity() {
                 }
             }
         }
+
+        //Launch my background listener
+        val serviceIntent = Intent(
+        this,
+        BackgroundService::class.java
+        )
+
+        startService(serviceIntent)
     }
 }
 

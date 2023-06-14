@@ -1,6 +1,12 @@
 package com.example.kinnect
 
+import android.Manifest
+import android.os.Build
+import android.util.Log
+import androidx.activity.compose.rememberLauncherForActivityResult
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.Modifier
 import androidx.navigation.NavHostController
 import androidx.navigation.NavType
@@ -33,8 +39,15 @@ fun Navigation(
     authViewModel: AuthViewModel,
 ){
 
+    val permissionLauncher = rememberLauncherForActivityResult(
+        contract = ActivityResultContracts.RequestPermission(),
+        onResult = {
+            Log.d("AAA notification request", it.toString())
+        }
+    )
+
     val startingScreen = if(authViewModel.hasUser){
-            HomeRoutes.Conversations.name
+        HomeRoutes.Conversations.name
         } else {
             AuthRoutes.Login.name
         }
@@ -130,6 +143,13 @@ fun Navigation(
             arguments = listOf(navArgument("chatId"){type = NavType.StringType; defaultValue = "chat1234"})
         ){
             ChatScreen(modifier = Modifier, onNavigateBack = {}, chatId = it.arguments?.getString("chatId"), name = it.arguments?.getString("name"))
+        }
+    }
+
+    LaunchedEffect(key1 = permissionLauncher){
+        Log.d("AA launch permission request", "YES!")
+        if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            permissionLauncher.launch(Manifest.permission.POST_NOTIFICATIONS)
         }
     }
 }
