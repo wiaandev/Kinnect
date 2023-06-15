@@ -177,7 +177,7 @@ fun ProfileScreen(
             Button(
                 onClick = {
                           profileViewModel.saveProfileData()
-                          },
+                },
                 modifier = Modifier.fillMaxWidth(),
                 colors = ButtonDefaults.buttonColors(containerColor = K_Orange, K_White),
                 shape = RoundedCornerShape(10.dp)) {
@@ -187,7 +187,6 @@ fun ProfileScreen(
                         .padding(10.dp))
             }
 
-            //TODO: Add Profile Image Feature
             Button(onClick = { AuthRepository().signOutUser(); navOnSignOut.invoke()}, colors = ButtonDefaults.buttonColors(containerColor = K_White, K_Orange)) {
                 Text(text = "Sign Out", style = poppinsBody, color = K_Orange)
             }

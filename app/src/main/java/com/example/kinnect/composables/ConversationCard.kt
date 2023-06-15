@@ -28,8 +28,10 @@ import coil.request.ImageRequest
 import com.example.kinnect.R
 import com.example.kinnect.models.Conversation
 import com.example.kinnect.ui.theme.K_Charcoal
+import com.example.kinnect.ui.theme.K_Orange
 import com.example.kinnect.ui.theme.K_OrangeLighter
 import com.example.kinnect.ui.theme.K_White
+import com.example.kinnect.ui.theme.K_WhiteDark
 import com.example.kinnect.ui.theme.poppinsBody
 import com.example.kinnect.ui.theme.poppinsH2
 import com.example.kinnect.ui.theme.poppinsH3
@@ -45,7 +47,7 @@ fun ConversationCard(conversation: Conversation, onNavToChat: (String) -> Unit, 
                 shape = RoundedCornerShape(10.dp)
             )
             .fillMaxWidth()
-            .padding(5.dp)
+            .padding(10.dp)
             .clickable {
                 onNavToChat.invoke(conversationId)
                 Log.d("AAAA Button Clicked", conversationId)

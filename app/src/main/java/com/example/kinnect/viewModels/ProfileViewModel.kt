@@ -62,9 +62,9 @@ class ProfileViewModel(
     }
 
     fun saveProfileData() = viewModelScope.launch {
+        Log.d("AAA Profile States", profileUiState.toString())
         if(hasUser){
             var downloadUrl = oldImage
-
             // if a new image was selected, upload the new one
             if(oldImage != profileUiState.profileImg.toString() || oldImage.isBlank()){
                 Log.d("AAA new image selected...", "YES!")
@@ -79,13 +79,19 @@ class ProfileViewModel(
                 Log.d("AAA new image URL", downloadUrl)
 
                 firestoreRepository.updateProfileInformation(
-                    user = User(
-                        id = currentUserId,
+                        uid = currentUserId,
                         firstName = profileUiState.firstName,
                         lastName = profileUiState.lastName,
-                        email = profileUiState.email,
                         profileImg = downloadUrl
-                    )
+                ){
+                    Log.d("AAA Updated User?", it.toString())
+                }
+            } else {
+                firestoreRepository.updateProfileInformation(
+                    uid = currentUserId,
+                    firstName = profileUiState.firstName,
+                    lastName = profileUiState.lastName,
+                    profileImg = downloadUrl
                 ){
                     Log.d("AAA Updated User?", it.toString())
                 }

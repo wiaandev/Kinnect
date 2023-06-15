@@ -16,6 +16,7 @@ import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Button
+import androidx.compose.material3.Divider
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.LinearProgressIndicator
 import androidx.compose.material3.MaterialTheme
@@ -43,6 +44,7 @@ import com.example.kinnect.ui.theme.K_Charcoal
 import com.example.kinnect.ui.theme.K_Orange
 import com.example.kinnect.ui.theme.K_OrangeLight
 import com.example.kinnect.ui.theme.K_White
+import com.example.kinnect.ui.theme.K_WhiteDark
 import com.example.kinnect.ui.theme.KinnectTheme
 import com.example.kinnect.ui.theme.poppinsBody
 import com.example.kinnect.ui.theme.poppinsHeading
@@ -69,8 +71,8 @@ fun ConversationsScreen(
 
     Column(
         Modifier
-        .background(K_White)
-        .fillMaxSize()) {
+            .background(K_White)
+            .fillMaxSize()) {
 
     Column(
         horizontalAlignment = Alignment.CenterHorizontally,
@@ -173,6 +175,7 @@ fun ConversationsScreen(
 
         LazyColumn(){
             items(allConversations){conversation ->
+                Spacer(modifier = Modifier.size(5.dp))
                 ConversationCard(Conversation(
                     firstName = conversation.firstName,
                     lastName = conversation.lastName,
@@ -181,8 +184,8 @@ fun ConversationsScreen(
                     mood = conversation.mood,
                 ), onNavToChat = onNavToChat,
                 conversationId = conversation.userId)
-
-                Spacer(modifier = Modifier.size(30.dp))
+                Spacer(modifier = Modifier.size(5.dp))
+                Divider(color = K_WhiteDark, thickness = 1.dp)
             }
         }
 

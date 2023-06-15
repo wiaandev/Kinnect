@@ -14,6 +14,7 @@ import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.foundation.text.ClickableText
 import androidx.compose.foundation.text.KeyboardActions
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.foundation.verticalScroll
@@ -39,6 +40,8 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalFocusManager
 import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.text.AnnotatedString
+import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.input.PasswordVisualTransformation
@@ -51,6 +54,7 @@ import com.example.kinnect.ui.theme.K_Charcoal
 import com.example.kinnect.ui.theme.K_Orange
 import com.example.kinnect.ui.theme.K_White
 import com.example.kinnect.ui.theme.KinnectTheme
+import com.example.kinnect.ui.theme.poppins
 import com.example.kinnect.ui.theme.poppinsBody
 import com.example.kinnect.ui.theme.poppinsH3
 import com.example.kinnect.ui.theme.poppinsHeading
@@ -237,11 +241,10 @@ fun RegisterScreen(
 
             Spacer(modifier = Modifier.size(30.dp))
 
-            Row(modifier = Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.Center, verticalAlignment = Alignment.CenterVertically) {
-                Text(text = "Already part of Kinnect?", style = poppinsBody, color = K_Charcoal)
-                Button(onClick = { onNavigateToLogin.invoke() }, colors = ButtonDefaults.buttonColors(containerColor = K_White, K_Orange)) {
-                    Text(text = "Login Here", style = poppinsBody)
-                }
+            Row(modifier = Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.Center) {
+                Text(text = "Have an account?", style = poppinsBody, color = K_Charcoal)
+                Spacer(modifier = Modifier.size(10.dp))
+                ClickableText(text = AnnotatedString("Go To Login"), onClick = {onNavigateToLogin.invoke()}, style = TextStyle(color = K_Orange, fontFamily = poppins))
             }
 
 

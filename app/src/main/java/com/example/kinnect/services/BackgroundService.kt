@@ -75,17 +75,18 @@ class BackgroundService: Service() {
 
             if (snapshot != null){
                 // Converts the result data to our messages
-                Log.d("AAA received realtime...", snapshot.toString())
+                Log.d("AAA received realtime...", snapshot.documentChanges.size.toString())
 
                 for(dc in snapshot!!.documentChanges) {
+                    Log.d("LOGGED IN FOR LOOP", "LOLOS")
                     when(dc.type){
                         DocumentChange.Type.ADDED ->
                             if(authRepository.currentUser?.uid != dc.document.data["fromUserId"].toString()){
-                        MyNotification(
-                            this,
-                            "newMessage",
-                            dc.document.data["message"].toString()
-                        ).showNotification()}
+                                MyNotification(
+                                    this,
+                                    "newMessage",
+                                    dc.document.data["message"].toString()
+                                ).showNotification()}
                         DocumentChange.Type.MODIFIED ->
                             Log.d("AAA service modified", "New message")
                         DocumentChange.Type.REMOVED ->

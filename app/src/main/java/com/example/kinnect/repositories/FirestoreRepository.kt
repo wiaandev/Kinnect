@@ -111,11 +111,15 @@ class FirestoreRepository {
     }
 
     suspend fun updateProfileInformation(
-        user: User,
+        uid: String,
+        firstName: String,
+        lastName: String,
+        profileImg: String,
         onSuccess: (Boolean) -> Unit
     ){
-        userRef.document(user.id ?: "")
-            .set(user, SetOptions.merge())
+        userRef.document(uid ?: "")
+//            .set(user, SetOptions.merge())
+            .update("firstName", firstName, "lastName", lastName, "profileImg", profileImg)
             .addOnSuccessListener {
                 Log.d("AAA Updated User Success: ", "Updated!!!!")
                 onSuccess.invoke(true)

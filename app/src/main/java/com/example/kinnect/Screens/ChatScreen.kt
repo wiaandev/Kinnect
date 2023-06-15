@@ -60,8 +60,11 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.text.input.VisualTransformation
 import coil.compose.AsyncImage
 import coil.request.ImageRequest
+import com.example.kinnect.models.Conversation
+import com.example.kinnect.viewModels.ConversationsViewModel
 import com.example.kinnect.viewModels.ProfileViewModel
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -73,8 +76,15 @@ fun ChatScreen(
     name: String?,
     modifier: Modifier,
     profileViewModel: ProfileViewModel = viewModel(),
+    convoViewModel: ConversationsViewModel = viewModel()
 ){
 
+
+    val allConversations = convoViewModel.convoList ?: listOf<Conversation>()
+
+    val singleConversation = allConversations.filter { conversation ->
+        conversation.userId == chatId
+    }.firstOrNull()
 
 
     val currentUserFrom = "Wiaan"
@@ -116,7 +126,7 @@ fun ChatScreen(
                         .clickable { Log.d("AAA: Going to profile", "YAY") }) {
                     AsyncImage(
                         model = ImageRequest.Builder(context = LocalContext.current)
-                            .data("")
+                            .data(singleConversation?.image)
                             .crossfade(true)
                             .build(),
                         contentDescription = "",
@@ -130,20 +140,11 @@ fun ChatScreen(
                 }
                 Spacer(modifier.size(10.dp))
                 Column() {
-                    Text(text = "Steve" , style = poppinsH2, color = K_Charcoal)
-                    Text(text = "Brother", style = poppinsH3, color = K_Charcoal)
+                    Text(text = "${singleConversation?.firstName} ${singleConversation?.lastName}" , style = poppinsH2, color = K_Charcoal)
+                    Text(text = "${singleConversation?.mood}", style = poppinsH3, color = K_Charcoal)
                 }
 
                 Spacer(modifier.size(10.dp))
-                Button(
-                    onClick = { Log.d("PROFILE GOING", "YAY") },
-                    colors = ButtonDefaults.buttonColors(containerColor = K_White, K_Charcoal),
-                    shape = RoundedCornerShape(10.dp)) {
-                    Text(text = "View Profile",
-                        style = poppinsBody,
-                        modifier = Modifier
-                            .padding(10.dp))
-                }
             }
 
             Spacer(modifier.size(20.dp))
@@ -170,7 +171,7 @@ fun ChatScreen(
                 OutlinedTextField(
                     value = newMessage,
                     onValueChange = {newMessage = it},
-                    label = { Text(text = "Enter Message...")},
+//                    label = { Text(text = "Enter Message...")},
                     modifier = Modifier
                         .padding(5.dp), shape = RoundedCornerShape(10.dp),
                     colors = TextFieldDefaults.outlinedTextFieldColors(
@@ -186,6 +187,7 @@ fun ChatScreen(
                         viewModel.sendNewMessage(newMessage, chatId ?: "")
                         newMessage = ""
                     },
+                    Modifier.height(57.dp),
                     colors = ButtonDefaults.buttonColors(containerColor = K_Orange, K_White),
                     shape = RoundedCornerShape(10.dp)) {
                     Icon(imageVector = Icons.Outlined.Send, contentDescription = null)
